@@ -41,9 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agencia.cs" />
+    <Compile Include="Bitacora.cs" />
     <Compile Include="BLL.cs" />
+    <Compile Include="Compras.cs" />
+    <Compile Include="Consecutivos.cs" />
+    <Compile Include="Errors.cs" />
+    <Compile Include="Pais.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Puerta.cs" />
+    <Compile Include="Reservas.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="Vuelos.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">
