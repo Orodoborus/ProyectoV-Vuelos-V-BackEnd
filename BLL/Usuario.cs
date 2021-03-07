@@ -9,8 +9,6 @@ using DAL;
 
 namespace BLL
 {
-
-    //testing
     public class Usuario
     {
         #region 
