@@ -9,5 +9,6 @@ namespace BLL
     public class BLL
     {
         //Empty class
+        //Empty class2
     }
 }
