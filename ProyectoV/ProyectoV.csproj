@@ -194,6 +194,7 @@
     <Compile Include="Models\Consecutivos.cs">
       <DependentUpon>VuelosDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\crypting.cs" />
     <Compile Include="Models\Errors.cs">
       <DependentUpon>VuelosDB.tt</DependentUpon>
     </Compile>

@@ -119,7 +119,7 @@ namespace DAL
                 sql_data_adapter = new SqlDataAdapter(sql, conexion);
                 if (es_procedimiento_almacenado)
                 {
-                    sql_data_adapter.SelectCommand.CommandType = CommandType.Text;
+                    sql_data_adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 }
                 sql_data_adapter.Fill(dataset);
                 numero_error = 0;

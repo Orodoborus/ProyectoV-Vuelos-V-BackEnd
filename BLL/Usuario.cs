@@ -84,7 +84,7 @@ namespace BLL
             }
             else
             {
-                sql = "SELECT * FROM Usuario;";
+                //sql = "SELECT * FROM Usuario;";
                 ds = cls_DAL.ejecuta_dataset(connection, sql, false,ref mensaje_error,ref numero_error);
                 if(numero_error != 0)
                 {
@@ -101,7 +101,7 @@ namespace BLL
         public void crearUser(ref string mensaje_error, ref int numero_error, int Cod_User,string Username, string Password, string Rol)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "INSERT INTO Usuario (Cod_User, Username, Password, Rol) VALUES ("+"'"+Cod_User+"'"+ "," + "'" + Username + "'" + "," + "'" + Password + "'" + "," + "'" + Rol + "'" + ");";
+            //sql = "INSERT INTO Usuario (Cod_User, Username, Password, Rol) VALUES ("+"'"+Cod_User+"'"+ "," + "'" + Username + "'" + "," + "'" + Password + "'" + "," + "'" + Rol + "'" + ");";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
@@ -109,11 +109,9 @@ namespace BLL
         public void deleteUser(ref string mensaje_error, ref int numero_error, int id)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-                sql = "DELETE FROM Usuario WHERE Cod_User = '"+id+"';";
+                //sql = "DELETE FROM Usuario WHERE Cod_User = '"+id+"';";
                 ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
-
-
 
         private List<Usuario> procesarUsuarios(DataTable dt)
         {
