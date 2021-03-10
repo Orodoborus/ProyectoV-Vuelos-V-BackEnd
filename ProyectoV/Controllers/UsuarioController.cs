@@ -32,7 +32,7 @@ namespace ProyectoV.Controllers
         public void Post([FromBody]Usuario user)
         {
             Usuario create = new Usuario();
-            create.crearUser(ref mensaje_error, ref numero_error, user.Cod_User, user.Username,user.Password,user.Rol);
+            create.crearUser(ref mensaje_error, ref numero_error, create.cod_users_id(), user.Username,user.Password,"");
         }
 
         // PUT: api/Usuario/5

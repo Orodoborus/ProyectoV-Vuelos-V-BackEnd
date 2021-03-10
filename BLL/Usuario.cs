@@ -14,6 +14,7 @@ namespace BLL
     //testing2
     public class Usuario
     {
+        int id;
         #region 
         private int _cod_user;
 
@@ -84,8 +85,8 @@ namespace BLL
             }
             else
             {
-                //sql = "SELECT * FROM Usuario;";
-                ds = cls_DAL.ejecuta_dataset(connection, sql, false,ref mensaje_error,ref numero_error);
+                sql = "exec select_all_users";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, true,ref mensaje_error,ref numero_error);
                 if(numero_error != 0)
                 {
                     return null;
@@ -95,14 +96,22 @@ namespace BLL
                     return procesarUsuarios(ds.Tables[0]);
                 }
             }
+        }
 
+        public int cod_users_id()
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "SELECT TOP 1 Cod_User from Usuario ORDER BY Cod_User DESC";
+            ds = cls_DAL.ejecuta_dataset_text(connection, sql, true, ref mensaje_error, ref numero_error);
+            id = id + 1;
+            return id;
         }
 
         public void crearUser(ref string mensaje_error, ref int numero_error, int Cod_User,string Username, string Password, string Rol)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            //sql = "INSERT INTO Usuario (Cod_User, Username, Password, Rol) VALUES ("+"'"+Cod_User+"'"+ "," + "'" + Username + "'" + "," + "'" + Password + "'" + "," + "'" + Rol + "'" + ");";
-            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+            sql = "exec register_user @Cod_user = '"+Cod_User+"', @Username = '"+Username+"', @Pass = '"+Password+"'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, true, ref mensaje_error, ref numero_error);
         }
 
 
@@ -122,6 +131,15 @@ namespace BLL
                         Username = dr["Username"].ToString(),
                         Password = dr["Password"].ToString(),
                         Rol = dr["Rol"].ToString()
+                    }).ToList();
+        }
+
+        private List<Usuario> procesarCod_User(DataTable dt)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Usuario()
+                    {
+                        Cod_User = Convert.ToInt32(dr["Cod_User"])
                     }).ToList();
         }
         #endregion

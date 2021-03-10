@@ -134,6 +134,30 @@ namespace DAL
             }
         }
 
+        public static DataSet ejecuta_dataset_text(SqlConnection conexion, string sql, bool es_text, ref string mensaje_error, ref int numero_error)
+        {
+            SqlDataAdapter sql_data_adapter;
+            DataSet dataset = new DataSet();
+            try
+            {
+                sql_data_adapter = new SqlDataAdapter(sql, conexion);
+                if (es_text)
+                {
+                    sql_data_adapter.SelectCommand.CommandType = CommandType.Text;
+                }
+                sql_data_adapter.Fill(dataset);
+                numero_error = 0;
+                mensaje_error = "ok";
+                return dataset;
+            }
+            catch (SqlException ex)
+            {
+                numero_error = ex.Number;
+                mensaje_error = ex.Message;
+                return null;
+            }
+        }
+
         /// <summary>
         /// realiza la carga de un dataset con parametros.
         /// </summary>
