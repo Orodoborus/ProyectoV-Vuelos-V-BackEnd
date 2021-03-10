@@ -14,7 +14,7 @@ namespace BLL
     //testing2
     public class Usuario
     {
-        int id;
+        
         #region 
         private int _cod_user;
 
@@ -63,7 +63,21 @@ namespace BLL
             get { return _num_error; }
             set { _num_error = value; }
         }
-        
+
+        static int contadorID = 0;
+
+        public static int GlobalValue
+        {
+            get
+            {
+                return contadorID;
+            }
+            set
+            {
+                contadorID = value;
+            }
+        }
+
 
         #region variables privadas
         SqlConnection connection;
@@ -86,7 +100,7 @@ namespace BLL
             else
             {
                 sql = "exec select_all_users";
-                ds = cls_DAL.ejecuta_dataset(connection, sql, true,ref mensaje_error,ref numero_error);
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false,ref mensaje_error,ref numero_error);
                 if(numero_error != 0)
                 {
                     return null;
@@ -98,20 +112,18 @@ namespace BLL
             }
         }
 
-        public int cod_users_id()
-        {
-            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "SELECT TOP 1 Cod_User from Usuario ORDER BY Cod_User DESC";
-            ds = cls_DAL.ejecuta_dataset_text(connection, sql, true, ref mensaje_error, ref numero_error);
-            id = id + 1;
-            return id;
-        }
+        //public int cod_users_id()
+        //{
+        //    connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+        //    sql = "SELECT TOP 1 Cod_User from Usuario ORDER BY Cod_User DESC";
+        //    ds = cls_DAL.ejecuta_dataset_text(connection, sql, false, ref mensaje_error, ref numero_error);
+        //}
 
         public void crearUser(ref string mensaje_error, ref int numero_error, int Cod_User,string Username, string Password, string Rol)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec register_user @Cod_user = '"+Cod_User+"', @Username = '"+Username+"', @Pass = '"+Password+"'";
-            ds = cls_DAL.ejecuta_dataset(connection, sql, true, ref mensaje_error, ref numero_error);
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
 

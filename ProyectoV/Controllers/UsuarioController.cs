@@ -9,10 +9,12 @@ using Newtonsoft.Json;
 
 namespace ProyectoV.Controllers
 {
+    
     public class UsuarioController : ApiController
     {
         string mensaje_error;
         int numero_error;
+        int x = Usuario.GlobalValue;
         // GET: api/Usuario
         public List<Usuario> Get()
         {
@@ -32,7 +34,7 @@ namespace ProyectoV.Controllers
         public void Post([FromBody]Usuario user)
         {
             Usuario create = new Usuario();
-            create.crearUser(ref mensaje_error, ref numero_error, create.cod_users_id(), user.Username,user.Password,"");
+            create.crearUser(ref mensaje_error, ref numero_error, Usuario.GlobalValue = Usuario.GlobalValue + 1, user.Username,user.Password,"");
         }
 
         // PUT: api/Usuario/5
