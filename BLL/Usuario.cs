@@ -112,17 +112,10 @@ namespace BLL
             }
         }
 
-        //public int cod_users_id()
-        //{
-        //    connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-        //    sql = "SELECT TOP 1 Cod_User from Usuario ORDER BY Cod_User DESC";
-        //    ds = cls_DAL.ejecuta_dataset_text(connection, sql, false, ref mensaje_error, ref numero_error);
-        //}
-
         public void crearUser(ref string mensaje_error, ref int numero_error, int Cod_User,string Username, string Password, string Rol)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "exec register_user @Cod_user = '"+Cod_User+"', @Username = '"+Username+"', @Pass = '"+Password+"'";
+            sql = "exec register_user @Cod_user = '"+Cod_User+"', @Username = '"+Username+"', @Pass = '"+Password+"', @Rol = '"+Rol+"'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 

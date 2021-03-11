@@ -182,52 +182,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Agencia.cs">
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Bitacora.cs">
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Compras.cs">
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Consecutivos.cs">
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\crypting.cs" />
-    <Compile Include="Models\Errors.cs">
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Pais.cs">
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Puerta.cs">
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Reservas.cs">
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Usuario.cs">
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Vuelos.cs">
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VuelosDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VuelosDB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VuelosDB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VuelosDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VuelosDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VuelosDB.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -239,16 +194,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\VuelosDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>VuelosDB.Context.cs</LastGenOutput>
-      <DependentUpon>VuelosDB.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\VuelosDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>VuelosDB.edmx</DependentUpon>
-      <LastGenOutput>VuelosDB.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -270,13 +215,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\VuelosDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>VuelosDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\VuelosDB.edmx.diagram">
-      <DependentUpon>VuelosDB.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -5,7 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BLL;
+using ProyectoV.Models;
 using Newtonsoft.Json;
+
 
 namespace ProyectoV.Controllers
 {
@@ -26,15 +28,22 @@ namespace ProyectoV.Controllers
         public Usuario Get(int id)
         {
             List<Usuario> listaUser = new Usuario().cargar_lista_usuarios(ref mensaje_error, ref numero_error);
+            crypting c = new crypting();
             Usuario x = listaUser.ElementAt(id);
-            return x;
+            Usuario spes = new Usuario();
+            spes.Cod_User = x.Cod_User;
+            spes.Username = c.decrypt(x.Username);
+            spes.Password = c.decrypt(x.Password);
+            spes.Rol = c.decrypt(x.Rol);
+            return spes;
         }
 
         // POST: api/Usuario
         public void Post([FromBody]Usuario user)
         {
             Usuario create = new Usuario();
-            create.crearUser(ref mensaje_error, ref numero_error, Usuario.GlobalValue = Usuario.GlobalValue + 1, user.Username,user.Password,"");
+            crypting c = new crypting();
+            create.crearUser(ref mensaje_error, ref numero_error, Usuario.GlobalValue = Usuario.GlobalValue + 1, c.encrypt(user.Username), c.encrypt(user.Password),c.encrypt("User"));
         }
 
         // PUT: api/Usuario/5
