@@ -43,12 +43,15 @@ namespace ProyectoV.Controllers
         {
             Usuario create = new Usuario();
             crypting c = new crypting();
-            create.crearUser(ref mensaje_error, ref numero_error, Usuario.GlobalValue = Usuario.GlobalValue + 1, c.encrypt(user.Username), c.encrypt(user.Password),c.encrypt("User"));
+            create.crearUser(ref mensaje_error, ref numero_error, Usuario.GlobalValue = Usuario.GlobalValue + 2, c.encrypt(user.Username), c.encrypt(user.Password),c.encrypt("User"));
         }
 
         // PUT: api/Usuario/5
-        public void Put(int id, [FromBody]Usuario value)
+        public void Put(int id, [FromBody]Usuario user)
         {
+            Usuario update = new Usuario();
+            crypting c = new crypting();
+            update.updateUser(ref mensaje_error, ref numero_error, c.encrypt(user.Username), c.encrypt(user.Rol));
         }
 
         // DELETE: api/Usuario/5

@@ -119,6 +119,13 @@ namespace BLL
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
+        public void updateUser(ref string mensaje_error, ref int numero_error, string Username, string Rol)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "exec update_user_rol @Username = '"+Username+"', @Rol = '"+Rol+"'";
+            ds = cls_DAL.ejecuta_dataset(connection,sql, false, ref mensaje_error, ref numero_error);
+        }
+
 
         public void deleteUser(ref string mensaje_error, ref int numero_error, int id)
         {
