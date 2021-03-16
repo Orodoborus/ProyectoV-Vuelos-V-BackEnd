@@ -176,6 +176,7 @@
     <Compile Include="Controllers\PuertaController.cs" />
     <Compile Include="Controllers\ReservasController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\UsuarioPasswordController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VuelosController.cs" />
     <Compile Include="Data\Usuario.cs" />

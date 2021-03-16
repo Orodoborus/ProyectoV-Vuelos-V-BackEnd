@@ -48,6 +48,31 @@ namespace BLL
             set { _rol = value; }
         }
 
+
+        private string _email;
+
+        public string Email
+        {
+            get { return _email; }
+            set { _email = value; }
+        }
+
+        private string _question;
+
+        public string Question
+        {
+            get { return _question; }
+            set { _question = value; }
+        }
+
+        private string _answer;
+
+        public string Answer
+        {
+            get { return _answer; }
+            set { _answer = value; }
+        }
+
         private string _Mensaje;
 
         public string Mensaje
@@ -63,6 +88,8 @@ namespace BLL
             get { return _num_error; }
             set { _num_error = value; }
         }
+
+
 
         static int contadorID = 0;
 
@@ -112,10 +139,12 @@ namespace BLL
             }
         }
 
-        public void crearUser(ref string mensaje_error, ref int numero_error, int Cod_User,string Username, string Password, string Rol)
+
+
+        public void crearUser(ref string mensaje_error, ref int numero_error, int Cod_User,string Username, string Password, string Rol,string Email, string Question, string Answer)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "exec register_user @Cod_user = '"+Cod_User+"', @Username = '"+Username+"', @Pass = '"+Password+"', @Rol = '"+Rol+"'";
+            sql = "exec register_user @Cod_user = '"+Cod_User+"', @Username = '"+Username+"', @Pass = '"+Password+"', @Rol = '"+Rol+"', @Email = '"+Email+"', @Question = '"+Question+"', @Answer = '"+Answer+"'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
@@ -126,6 +155,13 @@ namespace BLL
             ds = cls_DAL.ejecuta_dataset(connection,sql, false, ref mensaje_error, ref numero_error);
         }
 
+        public void updateUserPassword(ref string mensaje_error, ref int numero_error, string Username, string Password)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "user_password_update @Username = '" + Username + "', @Password = '" + Password + "'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+        }
+        
 
         public void deleteUser(ref string mensaje_error, ref int numero_error, int id)
         {
@@ -142,7 +178,10 @@ namespace BLL
                         Cod_User = Convert.ToInt32(dr["Cod_User"]),
                         Username = dr["Username"].ToString(),
                         Password = dr["Password"].ToString(),
-                        Rol = dr["Rol"].ToString()
+                        Rol = dr["Rol"].ToString(),
+                        Email = dr["Email"].ToString(),
+                        Question = dr["Question"].ToString(),
+                        Answer = dr["Answer"].ToString()
                     }).ToList();
         }
 

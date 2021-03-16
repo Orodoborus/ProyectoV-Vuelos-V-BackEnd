@@ -35,6 +35,9 @@ namespace ProyectoV.Controllers
             spes.Username = c.decrypt(x.Username);
             spes.Password = c.decrypt(x.Password);
             spes.Rol = c.decrypt(x.Rol);
+            spes.Email = c.decrypt(x.Email);
+            spes.Question = c.decrypt(x.Question);
+            spes.Answer = c.decrypt(x.Answer);
             return spes;
         }
 
@@ -43,7 +46,7 @@ namespace ProyectoV.Controllers
         {
             Usuario create = new Usuario();
             crypting c = new crypting();
-            create.crearUser(ref mensaje_error, ref numero_error, Usuario.GlobalValue = Usuario.GlobalValue + 2, c.encrypt(user.Username), c.encrypt(user.Password),c.encrypt("User"));
+            create.crearUser(ref mensaje_error, ref numero_error, Usuario.GlobalValue = Usuario.GlobalValue + 1, c.encrypt(user.Username), c.encrypt(user.Password),c.encrypt("User"), c.encrypt(user.Email), c.encrypt(user.Question),c.encrypt(user.Answer));
         }
 
         // PUT: api/Usuario/5
