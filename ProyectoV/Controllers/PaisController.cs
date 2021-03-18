@@ -43,8 +43,11 @@ namespace ProyectoV.Controllers
         }
 
         // PUT: api/Pais/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Pais country)
         {
+            Pais pais = new Pais();
+            crypting c = new crypting();
+            pais.update_country(ref mensaje_error, ref numero_error, country.Cod_Pais, c.encrypt(country.Nombre_Pais), c.encrypt(country.Imagen));
         }
 
         // DELETE: api/Pais/5
