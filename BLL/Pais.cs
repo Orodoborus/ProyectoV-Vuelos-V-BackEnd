@@ -47,6 +47,57 @@ namespace BLL
 
         #region Methods
 
+        public List<Pais> getAllCountries(ref string mensaje_error, ref int numero_error)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_countries";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return getPaises(ds.Tables[0]);
+                }
+            }
+        }
+
+
+        public void create_country(ref string mensaje_error, ref int numero_error, string Cod_Pais, string Nombre_Pais, string Imagen)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "exec create_new_country @Cod_Pais = '" + Cod_Pais + "', @Nombre_Pais = '" + Nombre_Pais + "', @Imagen = '" + Imagen + "'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+        }
+
+        public void update_country(ref string mensaje_error, ref int numero_error, string Cod_Pais, string Nombre_Pais, string Imagen)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "exec update_country @Cod_Pais = '" + Cod_Pais + "', @Nombre_Pais = '" + Nombre_Pais + "', @Imagen = '" + Imagen + "'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+        }
+
+
+        private List<Pais> getPaises(DataTable dt)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Pais()
+                    {
+                        Cod_Pais = dr["Cod_Pais"].ToString(),
+                        Nombre_Pais = dr["Nombre_Pais"].ToString(),
+                        Imagen = dr["Imagen"].ToString()
+                    }).ToList();
+        }
+
+
+
         #endregion
     }
 }

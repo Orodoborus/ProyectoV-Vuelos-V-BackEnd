@@ -125,6 +125,13 @@ namespace BLL
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
+        public void updateSpecificCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "exec update_cons_ID @Descripcion = '" + Descripcion + "', @Valor = '" + Valor + "'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+        }
+
         private List<Consecutivos> procesarConsecutivos(DataTable dt)
         {
             return (from DataRow dr in dt.Rows

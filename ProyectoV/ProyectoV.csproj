@@ -170,6 +170,7 @@
     <Compile Include="Controllers\BitacoraController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\ConsecutivosController.cs" />
+    <Compile Include="Controllers\ConsecutivosUpdateController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
