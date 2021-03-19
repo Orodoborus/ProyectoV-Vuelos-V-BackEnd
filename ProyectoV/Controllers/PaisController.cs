@@ -47,7 +47,7 @@ namespace ProyectoV.Controllers
         {
             Pais pais = new Pais();
             crypting c = new crypting();
-            pais.update_country(ref mensaje_error, ref numero_error, country.Cod_Pais, c.encrypt(country.Nombre_Pais), c.encrypt(country.Imagen));
+            pais.update_country(ref mensaje_error, ref numero_error, country.Cod_Pais, country.Cod_Pais2, c.encrypt(country.Nombre_Pais), c.encrypt(country.Imagen));
         }
 
         // DELETE: api/Pais/5

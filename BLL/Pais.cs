@@ -20,6 +20,16 @@ namespace BLL
             set { _Cod_Pais = value; }
         }
 
+
+        private string _Cod_Pais2;
+
+        public string Cod_Pais2
+        {
+            get { return _Cod_Pais2; }
+            set { _Cod_Pais2 = value; }
+        }
+
+
         private string _Nombre_Pais;
 
         public string Nombre_Pais
@@ -77,10 +87,10 @@ namespace BLL
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
-        public void update_country(ref string mensaje_error, ref int numero_error, string Cod_Pais, string Nombre_Pais, string Imagen)
+        public void update_country(ref string mensaje_error, ref int numero_error, string Cod_Pais1, string Cod_Pais2, string Nombre_Pais, string Imagen)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "exec update_country @Cod_Pais = '" + Cod_Pais + "', @Nombre_Pais = '" + Nombre_Pais + "', @Imagen = '" + Imagen + "'";
+            sql = "exec update_country @Cod_Pais = '" + Cod_Pais1 + "', @Cod_Pais2 = '"+ Cod_Pais2 + "',  @Nombre_Pais = '" + Nombre_Pais + "', @Imagen = '" + Imagen + "'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
