@@ -20,6 +20,14 @@ namespace BLL
             set { _cod_puerta = value; }
         }
 
+        private string _cod_puerta2;
+
+        public string Cod_Puerta2
+        {
+            get { return _cod_puerta2; }
+            set { _cod_puerta2 = value; }
+        }
+
         private string _numero_puerta;
 
         public string Numero_Puerta
@@ -47,6 +55,56 @@ namespace BLL
         #endregion
 
         #region Methods
+
+        public List<Puerta> getGates(ref string mensaje_error, ref int numero_error)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if(connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_gates";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+
+                    return getAllGates(ds.Tables[0]);
+                }
+            }
+        }
+
+        public void createGate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string Numero_Puerta, string Detalle)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "create_new_gate @Cod_Puerta = '"+Cod_Puerta+"', @Numero_Puerta = '"+Numero_Puerta+"', @Detalle = '"+Detalle+"'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+        }
+        public void updateGate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string Cod_Puerta2, string Numero_Puerta, string Detalle)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "update_ecist_gate @Cod_Puerta = '" + Cod_Puerta + "', @Cod_Puerta2 = '" +Cod_Puerta2+"' , @Numero_Puerta = '" + Numero_Puerta + "', @Detalle = '" + Detalle + "'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+        }
+
+
+        private List<Puerta> getAllGates(DataTable dt)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Puerta()
+                    {
+                        Cod_Puerta = dr["Cod_Puerta"].ToString(),
+                        Numero_Puerta = dr["Numero_Puerta"].ToString(),
+                        Detalle = dr["Detalle"].ToString()
+                    }).ToList();
+        }
+
+
 
         #endregion
     }
