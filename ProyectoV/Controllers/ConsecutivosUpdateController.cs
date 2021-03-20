@@ -43,7 +43,8 @@ namespace ProyectoV.Controllers
             Consecutivos x = new Consecutivos();
             crypting c = new crypting();
             int valor = Convert.ToInt32(cons.Valor) + 1;
-            x.updateSpecificCons(ref mensaje_error, ref numero_error, c.encrypt(cons.Descripcion), c.encrypt(valor.ToString()));
+            int rango_ini = Convert.ToInt32(cons.Rango_Ini) + 1;
+            x.updateSpecificCons(ref mensaje_error, ref numero_error, c.encrypt(cons.Descripcion), c.encrypt(valor.ToString()), c.encrypt(rango_ini.ToString()));
         }
 
     }

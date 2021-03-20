@@ -116,6 +116,13 @@ namespace BLL
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
+        public void delete_airline(ref string mensaje_error, ref int numero_error, string Cod_Aerolinea)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "delete_airline @Cod_Aerolinea = '" + Cod_Aerolinea + "'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+        }
+
         private List<Agencia> getAllAirlines(DataTable dt)
         {
             return (from DataRow dr in dt.Rows

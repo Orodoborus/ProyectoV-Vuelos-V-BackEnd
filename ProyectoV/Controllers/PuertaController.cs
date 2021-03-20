@@ -51,8 +51,11 @@ namespace ProyectoV.Controllers
         }
 
         // DELETE: api/Puerta/5
-        public void Delete(int id)
+        public void Delete(int id,[FromBody] Puerta gate)
         {
+            Puerta puerta = new Puerta();
+            crypting c = new crypting();
+            puerta.delete_gate(ref mensaje_error, ref numero_error, gate.Cod_Puerta);
         }
     }
 }

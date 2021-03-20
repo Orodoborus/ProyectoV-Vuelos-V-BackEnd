@@ -94,6 +94,13 @@ namespace BLL
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
+        public void delete_country(ref string mensaje_error, ref int numero_error, string Cod_Pais)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "exec delete_conutry @Cod_Pais = '"+ Cod_Pais+"'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+        }
+
 
         private List<Pais> getPaises(DataTable dt)
         {

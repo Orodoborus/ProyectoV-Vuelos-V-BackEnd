@@ -51,8 +51,11 @@ namespace ProyectoV.Controllers
         }
 
         // DELETE: api/Pais/5
-        public void Delete(int id)
+        public void Delete(int id, [FromBody] Pais country)
         {
+            Pais pais = new Pais();
+            crypting c = new crypting();
+            pais.delete_country(ref mensaje_error, ref numero_error, country.Cod_Pais);
         }
     }
 }

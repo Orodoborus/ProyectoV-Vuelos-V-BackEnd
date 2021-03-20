@@ -125,10 +125,10 @@ namespace BLL
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
-        public void updateSpecificCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor)
+        public void updateSpecificCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor, string Rango_Ini)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "exec update_cons_ID @Description = '" + Descripcion + "', @Valor = '" + Valor + "'";
+            sql = "exec update_cons_ID @Description = '" + Descripcion + "', @Valor = '" + Valor + "', @Rango_Ini = '"+Rango_Ini+"'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 

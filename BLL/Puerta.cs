@@ -92,6 +92,13 @@ namespace BLL
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
+        public void delete_gate(ref string mensaje_error, ref int numero_error, string Cod_Puerta)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "delete_gate @Cod_Puerta = '"+Cod_Puerta+"'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+        }
+
 
         private List<Puerta> getAllGates(DataTable dt)
         {
@@ -103,8 +110,6 @@ namespace BLL
                         Detalle = dr["Detalle"].ToString()
                     }).ToList();
         }
-
-
 
         #endregion
     }

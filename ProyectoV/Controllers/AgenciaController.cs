@@ -54,8 +54,11 @@ namespace ProyectoV.Controllers
         }
 
         // DELETE: api/Agencia/5
-        public void Delete(int id)
+        public void Delete(int id, [FromBody] Agencia airline)
         {
+            Agencia agency = new Agencia();
+            crypting c = new crypting();
+            agency.delete_airline(ref mensaje_error, ref numero_error, airline.Cod_Agencia);
         }
     }
 }
