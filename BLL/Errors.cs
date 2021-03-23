@@ -60,6 +60,21 @@ namespace BLL
             set { _error_number = value; }
         }
 
+        static int contadorID = 0;
+
+        public static int GlobalValue
+        {
+            get
+            {
+                return contadorID;
+            }
+            set
+            {
+                contadorID = value;
+            }
+        }
+
+
         #endregion
 
         #region variables privadas
@@ -94,11 +109,10 @@ namespace BLL
             }
         }
 
-        public void crearError(ref string mensaje_error, ref int numero_error, string Error_ID, string Error_Message, string Time, string Date, string Error_Number)
+        public void crearError(ref string mensaje_error, ref int numero_error, int Error_ID, string Error_Message, string Time, string Date, string Error_Number)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec register_error @Error_ID = '" + Error_ID + "', @Error_Message = '" + Error_Message + "', @Time = '" + Time + "', @Date = '" + Date + "', @Error_Number = '" + Error_Number + "'";
-            //sql = "exec register_user @Cod_user = '" + Cod_User + "', @Username = '" + Username + "', @Pass = '" + Password + "', @Rol = '" + Rol + "', @Email = '" + Email + "', @Question = '" + Question + "', @Answer = '" + Answer + "'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 

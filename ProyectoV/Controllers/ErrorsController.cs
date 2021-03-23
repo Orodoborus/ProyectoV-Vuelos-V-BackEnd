@@ -37,7 +37,7 @@ namespace ProyectoV.Controllers
             crypting c = new crypting();
             Errors x = listaError.ElementAt(id); //ojete con la x, es necesaria en errors?
             Errors spes = new Errors();
-            spes.Error_ID = c.decrypt(x.Error_ID);    //x.Error_ID;
+            spes.Error_ID = x.Error_ID;    //x.Error_ID;
             spes.Error_Message = c.decrypt(x.Error_Message);
             spes.Time = c.decrypt(x.Time);
             spes.Date = c.decrypt(x.Date);
@@ -50,7 +50,7 @@ namespace ProyectoV.Controllers
         {
             Errors create = new Errors();
             crypting c = new crypting();
-            create.crearError(ref mensaje_error, ref numero_error, c.encrypt(error.Error_ID), c.encrypt(error.Error_Message), c.encrypt(error.Time), c.encrypt(error.Date), c.encrypt(error.Error_Number));
+            create.crearError(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue+1,c.encrypt(error.Error_Message), c.encrypt(error.Time), c.encrypt(error.Date), c.encrypt(error.Error_Number));
         }
 
         // PUT: api/Errors/5
