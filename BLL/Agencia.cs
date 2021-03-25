@@ -139,7 +139,6 @@ namespace BLL
                 Bitacora bitacora = new Bitacora();
                 bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de un consecutivo"), bitacora.encrypt("Codigo:" + (Cod_Agencia) + "Nombre: " + (Nombre_Agencia) + "Imagen: " + (Imagen)));
             }
-        
         }
 
         public void delete_airline(ref string mensaje_error, ref int numero_error, string Cod_Aerolinea)

@@ -88,7 +88,7 @@ namespace BLL
         public void createGate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string Numero_Puerta, string Detalle)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "create_new_gate @Cod_Puerta = '"+Cod_Puerta+"', @Numero_Puerta = '"+Numero_Puerta+"', @Detalle = '"+Detalle+"'";
+            sql = "exec create_new_gate @Cod_Puerta = '"+Cod_Puerta+"', @Numero_Puerta = '"+Numero_Puerta+"', @Detalle = '"+Detalle+"'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
 
             if (numero_error != 0)
@@ -105,7 +105,7 @@ namespace BLL
         public void updateGate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string Cod_Puerta2, string Numero_Puerta, string Detalle)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "update_ecist_gate @Cod_Puerta = '" + Cod_Puerta + "', @Cod_Puerta2 = '" +Cod_Puerta2+"' , @Numero_Puerta = '" + Numero_Puerta + "', @Detalle = '" + Detalle + "'";
+            sql = "exec update_ecist_gate @Cod_Puerta = '" + Cod_Puerta + "', @Cod_Puerta2 = '" +Cod_Puerta2+"' , @Numero_Puerta = '" + Numero_Puerta + "', @Detalle = '" + Detalle + "'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
 
             if (numero_error != 0)
@@ -123,7 +123,7 @@ namespace BLL
         public void delete_gate(ref string mensaje_error, ref int numero_error, string Cod_Puerta)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "delete_gate @Cod_Puerta = '"+Cod_Puerta+"'";
+            sql = "exec delete_gate @Cod_Puerta = '"+Cod_Puerta+"'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
 
             if (numero_error != 0)

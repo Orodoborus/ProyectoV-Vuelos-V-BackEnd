@@ -92,8 +92,10 @@ namespace BLL
         }
             #endregion
 
+        
+
             #region variables privadas
-        SqlConnection connection;
+            SqlConnection connection;
         string mensaje_error;
         int numero_error;
         DataSet ds;
@@ -160,6 +162,8 @@ namespace BLL
             decrypted = new UnicodeEncoding().GetString(decrypt);
             return decrypted;
         }
+   
+
         #endregion
     }
 }
