@@ -155,7 +155,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de un consecutivo"), bitacora.encrypt("Codigo:" + (Cod_Aerolinea) ));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Delete"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de un consecutivo"), bitacora.encrypt("Codigo:" + (Cod_Aerolinea) ));
             }
         
         }
