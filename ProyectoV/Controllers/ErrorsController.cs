@@ -22,7 +22,9 @@ namespace ProyectoV.Controllers
     {
         string mensaje_error;
         int numero_error;
-        
+        string time = DateTime.Now.ToString("H:mm");
+        string date = DateTime.Now.ToString("dd-MM-yyyy");
+
         // GET: api/Errors
         public List<Errors> Get()
         {
@@ -52,15 +54,9 @@ namespace ProyectoV.Controllers
             crypting c = new crypting();
             create.crearError(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue+1,c.encrypt(error.Error_Message), c.encrypt(error.Time), c.encrypt(error.Date), c.encrypt(error.Error_Number));
         }
+        
 
-        // PUT: api/Errors/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        
 
-        // DELETE: api/Errors/5
-        public void Delete(int id)
-        {
-        }
     }
 }

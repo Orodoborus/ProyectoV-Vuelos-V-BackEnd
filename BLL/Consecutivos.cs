@@ -84,6 +84,9 @@ namespace BLL
         int numero_error;
         string sql;
         DataSet ds;
+        string time = DateTime.Now.ToString("H:mm");
+        string date = DateTime.Now.ToString("dd-MM-yyyy");
+
         #endregion
 
         #region Methods
@@ -101,6 +104,9 @@ namespace BLL
                 ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
                 if (numero_error != 0)
                 {
+                    Errors e = new Errors();
+                    e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+
                     return null;
                 }
                 else
@@ -116,6 +122,12 @@ namespace BLL
             sql = "exec create_new_consecutive @Codigo_Consecutivo = "+Codigo_Consecutivo+", @Descripcion = '"+ Descripcion +
                 "', @Valor = '"+Valor+"', @Prefijo = '"+ prefijo + "', @Rango_Ini = '"+ Rango_ini + "', @Rango_Fin = '"+ Rango_Fin + "'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
         }
 
         public void updateCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor, string prefijo, string Rango_ini, string Rango_fin)
@@ -123,6 +135,12 @@ namespace BLL
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec consecutive_update_cambios @Descripcion = '" + Descripcion + "', @Valor = '" + Valor + "', @Prefijo = '" + prefijo + "', @Rango_ini = '" + Rango_ini + "', @Rango_fin = '" + Rango_fin + "'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
         }
 
         public void updateSpecificCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor, string Rango_Ini)
@@ -130,6 +148,12 @@ namespace BLL
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec update_cons_ID @Description = '" + Descripcion + "', @Valor = '" + Valor + "', @Rango_Ini = '"+Rango_Ini+"'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
         }
 
         private List<Consecutivos> procesarConsecutivos(DataTable dt)

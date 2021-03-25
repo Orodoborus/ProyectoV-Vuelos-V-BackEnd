@@ -10,8 +10,6 @@ using DAL;
 namespace BLL
 {
 
-    //testing
-    //testing2
     public class Usuario
     {
         
@@ -112,6 +110,10 @@ namespace BLL
         int numero_error;
         string sql;
         DataSet ds;
+
+        string time = DateTime.Now.ToString("H:mm");
+        string date = DateTime.Now.ToString("dd-MM-yyyy");
+
         #endregion
 
         #endregion
@@ -130,6 +132,8 @@ namespace BLL
                 ds = cls_DAL.ejecuta_dataset(connection, sql, false,ref mensaje_error,ref numero_error);
                 if(numero_error != 0)
                 {
+                    Errors e = new Errors();
+                    e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
                     return null;
                 }
                 else
@@ -146,6 +150,12 @@ namespace BLL
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec register_user @Cod_user = '"+Cod_User+"', @Username = '"+Username+"', @Pass = '"+Password+"', @Rol = '"+Rol+"', @Email = '"+Email+"', @Question = '"+Question+"', @Answer = '"+Answer+"'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
         }
 
         public void updateUser(ref string mensaje_error, ref int numero_error, string Username, string Rol)
@@ -153,6 +163,12 @@ namespace BLL
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec update_user_rol @Username = '"+Username+"', @Rol = '"+Rol+"'";
             ds = cls_DAL.ejecuta_dataset(connection,sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
         }
 
         public void updateUserPassword(ref string mensaje_error, ref int numero_error, string Username, string Password)
@@ -160,6 +176,12 @@ namespace BLL
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "user_password_update @Username = '" + Username + "', @Password = '" + Password + "'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
         }
         
 
@@ -168,6 +190,12 @@ namespace BLL
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
                 //sql = "DELETE FROM Usuario WHERE Cod_User = '"+id+"';";
                 ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
         }
 
         private List<Usuario> procesarUsuarios(DataTable dt)

@@ -52,6 +52,10 @@ namespace BLL
         int numero_error;
         string sql;
         DataSet ds;
+
+        string time = DateTime.Now.ToString("H:mm");
+        string date = DateTime.Now.ToString("dd-MM-yyyy");
+
         #endregion
 
         #region Methods
@@ -69,6 +73,8 @@ namespace BLL
                 ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
                 if (numero_error != 0)
                 {
+                    Errors e = new Errors();
+                    e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
                     return null;
                 }
                 else
@@ -84,12 +90,24 @@ namespace BLL
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "create_new_gate @Cod_Puerta = '"+Cod_Puerta+"', @Numero_Puerta = '"+Numero_Puerta+"', @Detalle = '"+Detalle+"'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
         }
         public void updateGate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string Cod_Puerta2, string Numero_Puerta, string Detalle)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "update_ecist_gate @Cod_Puerta = '" + Cod_Puerta + "', @Cod_Puerta2 = '" +Cod_Puerta2+"' , @Numero_Puerta = '" + Numero_Puerta + "', @Detalle = '" + Detalle + "'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
         }
 
         public void delete_gate(ref string mensaje_error, ref int numero_error, string Cod_Puerta)
@@ -97,6 +115,12 @@ namespace BLL
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "delete_gate @Cod_Puerta = '"+Cod_Puerta+"'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
         }
 
 

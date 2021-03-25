@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 
+
+
+
 /*
  4.6.2. Errores
 Consiste en mostrar una lista con los errores que se han registrado en la aplicación. La 
@@ -17,6 +20,7 @@ de error y el mensaje de error correspondiente.
 
 namespace BLL
 {
+
     public class Errors
     {
         #region propfulls
@@ -81,6 +85,8 @@ namespace BLL
         SqlConnection connection;
         string mensaje_error;
         int numero_error;
+        string time = DateTime.Now.ToString("H:mm");
+        string date = DateTime.Now.ToString("dd-MM-yyyy");
         string sql;
         DataSet ds;
         #endregion
@@ -92,7 +98,7 @@ namespace BLL
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             if (connection == null)
             {
-                return null;
+                return null;// Imposible registrar este error porque no tiene conexion con la base.
             }
             else
             {
@@ -100,16 +106,33 @@ namespace BLL
                 ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
                 if (numero_error != 0)
                 {
+                    crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, encrypt(mensaje_error), encrypt(time), encrypt(date), encrypt(numero_error.ToString()));
+
+
                     return null;
                 }
                 else
                 {
+                    
                     return procesarErrores(ds.Tables[0]);
                 }
             }
         }
 
         public void crearError(ref string mensaje_error, ref int numero_error, int Error_ID, string Error_Message, string Time, string Date, string Error_Number)
+        {
+            
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "exec register_error @Error_ID = '" + Error_ID + "', @Error_Message = '" + Error_Message + "', @Time = '" + Time + "', @Date = '" + encrypt(date) + "', @Error_Number = '" + Error_Number + "'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+            if (numero_error != 0)
+            {
+                crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, encrypt(mensaje_error), encrypt(time), encrypt(date), encrypt(numero_error.ToString()));
+            }
+
+        }
+
+        public void crearErrorInterno(ref string mensaje_error, ref int numero_error, int Error_ID, string Error_Message, string Time, string Date, string Error_Number)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec register_error @Error_ID = '" + Error_ID + "', @Error_Message = '" + Error_Message + "', @Time = '" + Time + "', @Date = '" + Date + "', @Error_Number = '" + Error_Number + "'";
@@ -129,6 +152,20 @@ namespace BLL
                         Error_Number = dr["Error_Number"].ToString()
                     }).ToList();
         }
+
+
+        public string encrypt(string text)
+        {
+            string encrypted = string.Empty;
+            Byte[] encrypt = new UnicodeEncoding().GetBytes(text);
+            encrypted = Convert.ToBase64String(encrypt);
+            return encrypted;
+        }
+
+
+
+
+
 
         #endregion
     }
