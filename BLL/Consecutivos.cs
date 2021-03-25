@@ -128,6 +128,11 @@ namespace BLL
                 Errors e = new Errors();
                 e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
             }
+            else
+            {
+                Bitacora bitacora = new Bitacora();
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Codigo_Consecutivo.ToString(), bitacora.encrypt("Creacion de consecutivo"), bitacora.encrypt("Codigo:" + Codigo_Consecutivo.ToString() + "Descripcion: " + Descripcion + "Valor: " + Valor));
+            }
         }
 
         public void updateCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor, string prefijo, string Rango_ini, string Rango_fin)
@@ -141,6 +146,11 @@ namespace BLL
                 Errors e = new Errors();
                 e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
             }
+            else
+            {
+                Bitacora bitacora = new Bitacora();
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de un consecutivo"), bitacora.encrypt("Descripcion:" + (Descripcion) + "Valor: " + (Valor) + "Prefijo: " + (Prefijo)));
+            }
         }
 
         public void updateSpecificCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor, string Rango_Ini)
@@ -153,6 +163,11 @@ namespace BLL
             {
                 Errors e = new Errors();
                 e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
+            else
+            {
+                Bitacora bitacora = new Bitacora();
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de un consecutivo especifico"), bitacora.encrypt("Descripcion:" + (Descripcion) + "Valor: " + (Valor) + "Rango Ini: " + (Rango_Ini)));
             }
         }
 

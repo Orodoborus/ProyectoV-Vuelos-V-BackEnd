@@ -108,20 +108,25 @@ namespace BLL
         public void createAirline(ref string mensaje_error, ref int numero_error, int Cod_Agencia, string Nombre_Agencia, string Imagen, string Cod_Pais_FK, string Cod_Aerolinea)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "create_new_airline @Cod_Agencia= '"+Cod_Agencia+"', @Nombre_Agencia = '"+Nombre_Agencia+"', @Imagen = '"+Imagen+"', @Cod_Pais_FK = '"+Cod_Pais_FK+"', @Cod_Aerolinea = '"+Cod_Aerolinea+"'";
+            sql = "exec create_new_airline @Cod_Agencia= '"+Cod_Agencia+"', @Nombre_Agencia = '"+Nombre_Agencia+"', @Imagen = '"+Imagen+"', @Cod_Pais_FK = '"+Cod_Pais_FK+"', @Cod_Aerolinea = '"+Cod_Aerolinea+"'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
             if (numero_error != 0)
             {
                 Errors e = new Errors();
                 e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
             }
+            else
+            {
+                Bitacora bitacora = new Bitacora();
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_Agencia.ToString(), bitacora.encrypt("Creacion de una aerolinea"), bitacora.encrypt("Codigo:" + Cod_Agencia + "Nombre: " + Nombre_Agencia + "Imagen: " +  Imagen ));
+        }
 
         }
 
         public void update_airline(ref string mensaje_error, ref int numero_error, string Cod_Agencia, string Nombre_Agencia, string Imagen, string Cod_Pais_FK, string Cod_Aerolinea)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "update_exist_airline @Cod_Agencia= '" + Cod_Agencia + "', @Nombre_Agencia = '" + Nombre_Agencia + "', @Imagen = '" + Imagen + "', @Cod_Pais_FK = '" + Cod_Pais_FK + "', @Cod_Aerolinea = '" + Cod_Aerolinea + "'"; ;
+            sql = "exec update_exist_airline @Cod_Agencia= '" + Cod_Agencia + "', @Nombre_Agencia = '" + Nombre_Agencia + "', @Imagen = '" + Imagen + "', @Cod_Pais_FK = '" + Cod_Pais_FK + "', @Cod_Aerolinea = '" + Cod_Aerolinea + "'"; ;
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
 
             if (numero_error != 0)
@@ -129,12 +134,18 @@ namespace BLL
                 Errors e = new Errors();
                 e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
             }
+            else
+            {
+                Bitacora bitacora = new Bitacora();
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de un consecutivo"), bitacora.encrypt("Codigo:" + (Cod_Agencia) + "Nombre: " + (Nombre_Agencia) + "Imagen: " + (Imagen)));
+            }
+        
         }
 
         public void delete_airline(ref string mensaje_error, ref int numero_error, string Cod_Aerolinea)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "delete_airline @Cod_Aerolinea = '" + Cod_Aerolinea + "'";
+            sql = "exec delete_airline @Cod_Aerolinea = '" + Cod_Aerolinea + "'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
 
             if (numero_error != 0)
@@ -142,6 +153,12 @@ namespace BLL
                 Errors e = new Errors();
                 e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
             }
+            else
+            {
+                Bitacora bitacora = new Bitacora();
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de un consecutivo"), bitacora.encrypt("Codigo:" + (Cod_Aerolinea) ));
+            }
+        
         }
 
         private List<Agencia> getAllAirlines(DataTable dt)
