@@ -61,7 +61,7 @@ namespace BLL
         }
 
 
-        static int consID = 0;
+        static int consID = 5;
 
         public static int GlobalValue
         {

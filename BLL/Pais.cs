@@ -46,6 +46,21 @@ namespace BLL
             get { return _image; }
             set { _image = value; }
         }
+
+        static string Cod_Country = "";
+
+        public static string GlobalValue
+        {
+            get
+            {
+                return Cod_Country;
+            }
+            set
+            {
+                Cod_Country = value;
+            }
+        }
+
         #endregion
 
         #region variables privadas
@@ -70,6 +85,31 @@ namespace BLL
             else
             {
                 sql = "exec get_all_countries";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    Errors e = new Errors();
+                    e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+
+                    return null;
+                }
+                else
+                {
+                    return getPaises(ds.Tables[0]);
+                }
+            }
+        }
+
+        public List<Pais> getOneCountryName(ref string mensaje_error, ref int numero_error, string Cod_Pais)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_con_name_wthCod @Cod_Pais = '"+Cod_Pais+"'";
                 ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
                 if (numero_error != 0)
                 {

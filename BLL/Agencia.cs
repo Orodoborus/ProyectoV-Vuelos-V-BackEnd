@@ -67,6 +67,20 @@ namespace BLL
             }
         }
 
+        static string Cod_Country = "";
+
+        public static string GlobalValueCountry
+        {
+            get
+            {
+                return Cod_Country;
+            }
+            set
+            {
+                Cod_Country = value;
+            }
+        }
+
         #endregion
 
         #region variables privadas
@@ -101,6 +115,30 @@ namespace BLL
                 else
                 {
                     return getAllAirlines(ds.Tables[0]);
+                }
+            }
+        }
+
+        public List<Agencia> getFilteredAgencias(ref string mensaje_error, ref int numero_error, string Cod_Pais_FK)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+                return null;
+            }
+            else
+            {
+                sql = "exec get_filtered_agency @Cod_Pais_FK = '"+Cod_Pais_FK+"'";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return getFilteredAirlines(ds.Tables[0], Cod_Pais_FK);
                 }
             }
         }
@@ -171,6 +209,19 @@ namespace BLL
                         Cod_Pais_FK = dr["Cod_Pais_FK"].ToString(),
                         Cod_Aerolinea = dr["Cod_Aerolinea"].ToString()
                     }).ToList();
+        }
+
+        private List<Agencia> getFilteredAirlines(DataTable dt, string cod_pais_fk)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Agencia()
+                    {
+                        Cod_Agencia = dr["Cod_Agencia"].ToString(),
+                        Nombre_Agencia = dr["Nombre_Agencia"].ToString(),
+                        Imagen = dr["Imagen"].ToString(),
+                        Cod_Pais_FK = dr["Cod_Pais_FK"].ToString(),
+                        Cod_Aerolinea = dr["Cod_Aerolinea"].ToString()
+                    }).ToList().Where(x => x.Cod_Pais_FK.Equals(cod_pais_fk)).ToList();
         }
 
         #endregion

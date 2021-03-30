@@ -44,6 +44,20 @@ namespace BLL
             set { _detalle = value; }
         }
 
+        static string Details = "";
+
+        public static string GlobalValueDetail
+        {
+            get
+            {
+                return Details;
+            }
+            set
+            {
+                Details = value;
+            }
+        }
+
         #endregion
 
         #region variables privadas
@@ -81,6 +95,31 @@ namespace BLL
                 {
 
                     return getAllGates(ds.Tables[0]);
+                }
+            }
+        }
+
+        public List<Puerta> getFilteredGates(ref string mensaje_error, ref int numero_error, string detail)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_gates";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    Errors e = new Errors();
+                    e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+                    return null;
+                }
+                else
+                {
+
+                    return getAllGatesFilter(ds.Tables[0], encrypt(detail));
                 }
             }
         }
@@ -138,6 +177,14 @@ namespace BLL
             }
         }
 
+        public string encrypt(string text)
+        {
+            string encrypted = string.Empty;
+            Byte[] encrypt = new UnicodeEncoding().GetBytes(text);
+            encrypted = Convert.ToBase64String(encrypt);
+            return encrypted;
+        }
+
 
         private List<Puerta> getAllGates(DataTable dt)
         {
@@ -148,6 +195,17 @@ namespace BLL
                         Numero_Puerta = dr["Numero_Puerta"].ToString(),
                         Detalle = dr["Detalle"].ToString()
                     }).ToList();
+        }
+
+        private List<Puerta> getAllGatesFilter(DataTable dt, string detail)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Puerta()
+                    {
+                        Cod_Puerta = dr["Cod_Puerta"].ToString(),
+                        Numero_Puerta = dr["Numero_Puerta"].ToString(),
+                        Detalle = dr["Detalle"].ToString()
+                    }).ToList().Where(x => x.Detalle.Equals(detail)).ToList();
         }
 
         #endregion

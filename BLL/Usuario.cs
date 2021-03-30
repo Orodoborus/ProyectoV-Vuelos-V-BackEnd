@@ -12,7 +12,6 @@ namespace BLL
 
     public class Usuario
     {
-        
         #region 
         private int _cod_user;
 
@@ -89,7 +88,7 @@ namespace BLL
 
 
 
-        static int contadorID = 0;
+        static int contadorID = 5;
 
         public static int GlobalValue
         {
