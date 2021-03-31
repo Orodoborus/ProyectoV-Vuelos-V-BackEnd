@@ -154,7 +154,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_Puerta, bitacora.encrypt("Creacion de nueva puerta"), bitacora.encrypt("Codigo:" + Cod_Puerta + "Numero: " + Numero_Puerta + "Detalle: " + Detalle));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_Puerta, bitacora.encrypt("Creacion de nueva puerta"), bitacora.encrypt("Codigo: " + Cod_Puerta + " | Numero: " + bitacora.decrypt(Numero_Puerta) + " | Detalle: " + bitacora.decrypt(Detalle)));
             }
         }
         public void updateGate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string Cod_Puerta2, string Numero_Puerta, string Detalle, string UsernameC, string GateCod)
@@ -171,7 +171,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), GateCod, bitacora.encrypt("Update de una puerta"), bitacora.encrypt("Codigo:" + Cod_Puerta + "Numero: " + Numero_Puerta + "Detalle: " + Detalle));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), GateCod, bitacora.encrypt("Update de una puerta"), bitacora.encrypt("Codigo: " + Cod_Puerta + " | Numero: " + bitacora.decrypt(Numero_Puerta) + " | Detalle: " + bitacora.decrypt(Detalle)));
             }
         }
 
@@ -189,7 +189,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Delete"), bitacora.encrypt(time), GateCode, bitacora.encrypt("Delete de una puerta"), bitacora.encrypt("Codigo:" + Cod_Puerta));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Delete"), bitacora.encrypt(time), GateCode, bitacora.encrypt("Delete de una puerta"), bitacora.encrypt("-"));
             }
         }
 

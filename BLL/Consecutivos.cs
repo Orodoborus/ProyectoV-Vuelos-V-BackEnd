@@ -146,7 +146,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Codigo_Consecutivo.ToString(), bitacora.encrypt("Creacion de consecutivo"), bitacora.encrypt("Codigo:" + Codigo_Consecutivo.ToString() + "Descripcion: " + Descripcion + "Valor: " + Valor));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Codigo_Consecutivo.ToString(), bitacora.encrypt("Creacion de consecutivo"), bitacora.encrypt("Codigo: " + Codigo_Consecutivo.ToString() + " | Descripcion: " + bitacora.decrypt(Descripcion) + " | Valor: " + bitacora.decrypt(Valor) + " | Prefijo: " + bitacora.decrypt(prefijo) + " | RangoINI - RangoFIN: "+ bitacora.decrypt(Rango_ini)+"-"+bitacora.decrypt(Rango_Fin)));
             }
         }
 
@@ -164,7 +164,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), ConsCod, bitacora.encrypt("Update de un consecutivo"), bitacora.encrypt("Descripcion:" + (Descripcion) + "Valor: " + (Valor) + "Prefijo: " + (Prefijo)));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), ConsCod, bitacora.encrypt("Update de un consecutivo"), bitacora.encrypt("Codigo: " + Codigo_Consecutivo.ToString() + " | Descripcion: " + bitacora.decrypt(Descripcion) + " | Valor: " + bitacora.decrypt(Valor) + " | Prefijo: " + bitacora.decrypt(prefijo) + " | RangoINI - RangoFIN: " + bitacora.decrypt(Rango_ini) + "-" + bitacora.decrypt(Rango_fin)));
             }
         }
 

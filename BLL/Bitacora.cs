@@ -137,7 +137,7 @@ namespace BLL
         public void CreateBitacora(ref string mensaje_error, ref int numero_error, string Cod_Registro, string Cod_User_FK, string FechaTime, string Tipo, string Time, string Cod_Regis, string Descripcion, string Registro_Detalle)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
-            sql = "exec create_new_bitacora @Cod_Registro = '" + Cod_Registro + "', @Cod_User_FK = '" + Cod_User_FK + "', @FechaTime = '" + FechaTime + "', @Tipo = '" + Tipo + "', @Time = '" + Time + "', @Cod_Regis = '" + Cod_Regis + "', @Descripcion = '" + Descripcion + "', @Registro_Detalle = '" + RegistroDetalle + "'";
+            sql = "exec create_new_bitacora @Cod_Registro = '" + Cod_Registro + "', @Cod_User_FK = '" + Cod_User_FK + "', @FechaTime = '" + FechaTime + "', @Tipo = '" + Tipo + "', @Time = '" + Time + "', @Cod_Regis = '" + Cod_Regis + "', @Descripcion = '" + Descripcion + "', @Registro_Detalle = '" + Registro_Detalle + "'";
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
 
         }

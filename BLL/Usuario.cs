@@ -103,7 +103,7 @@ namespace BLL
         }
 
 
-        static int contadorID = 5;
+        static int contadorID = 10;
 
         public static int GlobalValue
         {
@@ -172,7 +172,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_User.ToString(), bitacora.encrypt("Creacion de nuevo usuario"), bitacora.encrypt("Codigo:" + Cod_User + "Nombre: " + Username + "Email: " + Email));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_User.ToString(), bitacora.encrypt("Creacion de nuevo usuario"), bitacora.encrypt("Codigo: " + Cod_User + " | Nombre: " + bitacora.decrypt(Username) + " | Email: " + bitacora.decrypt(Email)));
             }
         }
 
@@ -189,7 +189,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), Username, bitacora.encrypt("Update de rol"), bitacora.encrypt("Nombre de usuario:" + Username + "Rol: " +Rol));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), Username, bitacora.encrypt("Update de rol"), bitacora.encrypt("Nombre de usuario: " + bitacora.decrypt(Username) + " | Rol: " + bitacora.decrypt(Rol)));
             }
         }
 
@@ -206,7 +206,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), Cod_User, bitacora.encrypt("Cambio de contraseña"), bitacora.encrypt("Nombre de usuario:" + (Username)));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), Cod_User, bitacora.encrypt("Cambio de contraseña"), bitacora.encrypt("Nombre de usuario:" + bitacora.decrypt(Username)+" | PasswordChange****"));
 
             }
         }

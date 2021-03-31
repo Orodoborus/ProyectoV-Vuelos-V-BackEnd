@@ -156,7 +156,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_Pais, bitacora.encrypt("Creacion de un nuevo pais"), bitacora.encrypt("Codigo:" + (Cod_Pais) + "Nombre de pais: " + (Nombre_Pais) + "Imagen: " + Imagen));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_Pais, bitacora.encrypt("Creacion de un nuevo pais"), bitacora.encrypt("Codigo: " + Cod_Pais + " | Nombre de pais: " + bitacora.decrypt(Nombre_Pais) + " | Imagen: " + bitacora.decrypt(Imagen)));
             }
         }
 
@@ -173,7 +173,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), CodCountry, bitacora.encrypt("Update de Pais"), bitacora.encrypt("Pais viejo:" + (Cod_Pais1) + "Pais nuevo: " + (Cod_Pais2) + "Imagen: " + Imagen));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), CodCountry, bitacora.encrypt("Update de Pais"), bitacora.encrypt("Pais viejo: " + Cod_Pais1 + " | Pais nuevo: " + Cod_Pais2+ " | Nombre de pais: " + bitacora.decrypt(Nombre_Pais) +  " | Imagen: " + bitacora.decrypt(Imagen)));
             }
         }
 
@@ -190,7 +190,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Delete"), bitacora.encrypt(time), CodCountry, bitacora.encrypt("Delete de una pais"), bitacora.encrypt("Codigo:" + (Cod_Pais)));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Delete"), bitacora.encrypt(time), CodCountry, bitacora.encrypt("Delete de una pais"), bitacora.encrypt("-"));
             }
 
         }
