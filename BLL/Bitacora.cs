@@ -298,7 +298,7 @@ namespace BLL
                         Cod_Regis = dr["Cod_Regis"].ToString(),
                         Descripcion = dr["Descripcion"].ToString(),
                         RegistroDetalle = dr["Registro_Detalle"].ToString()
-                    }).ToList().Where(x => x.encrypt(user).Equals(x.Cod_User_FK) || x.encrypt(type).Equals(x.Tipo)).ToList();
+                    }).ToList().Where(x => x.encrypt(user).Equals(x.Cod_User_FK) && x.encrypt(type).Equals(x.Tipo)).ToList();
         }
 
         public string encrypt(string text)
