@@ -189,7 +189,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), Username, bitacora.encrypt("Update de rol"), bitacora.encrypt("Nombre de usuario: " + bitacora.decrypt(Username) + " | Rol: " + bitacora.decrypt(Rol)));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), Username, bitacora.encrypt("Update de rol"), bitacora.encrypt("Codigo de usuario: " +Username + " | Rol: " + bitacora.decrypt(Rol)));
             }
         }
 

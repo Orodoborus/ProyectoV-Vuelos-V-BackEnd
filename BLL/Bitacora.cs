@@ -98,12 +98,40 @@ namespace BLL
                 contadorID = value;
             }
         }
-            #endregion
 
-        
+        static string UserFilter = "";
 
-            #region variables privadas
-            SqlConnection connection;
+        public static string GlobalValueFilterUser
+        {
+            get
+            {
+                return UserFilter;
+            }
+            set
+            {
+                UserFilter = value;
+            }
+        }
+
+        static string TypeFilter = "";
+
+        public static string GlobalValueFilterType
+        {
+            get
+            {
+                return TypeFilter;
+            }
+            set
+            {
+                TypeFilter = value;
+            }
+        }
+        #endregion
+
+
+
+        #region variables privadas
+        SqlConnection connection;
         string mensaje_error;
         int numero_error;
         DataSet ds;
@@ -134,6 +162,74 @@ namespace BLL
                 }
             }
         }
+
+        public List<Bitacora> GetBitacorasUserFiltered(ref string mensaje_error, ref int numero_error, string user)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_bitacoras";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ProcesarBitacorasFilteredByUser(ds.Tables[0],user);
+                }
+            }
+        }
+
+        public List<Bitacora> GetBitacorasUserFilteredbyType(ref string mensaje_error, ref int numero_error, string type)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_bitacoras";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ProcesarBitacorasFilteredByType(ds.Tables[0], type);
+                }
+            }
+        }
+
+        public List<Bitacora> GetBitacorasUserFilteredbyTypeAndUser(ref string mensaje_error, ref int numero_error,string user, string type)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_bitacoras";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ProcesarBitacorasFilteredByTypeAndUser(ds.Tables[0], user, type);
+                }
+            }
+        }
+
+
         public void CreateBitacora(ref string mensaje_error, ref int numero_error, string Cod_Registro, string Cod_User_FK, string FechaTime, string Tipo, string Time, string Cod_Regis, string Descripcion, string Registro_Detalle)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
@@ -156,6 +252,55 @@ namespace BLL
                         RegistroDetalle = dr["Registro_Detalle"].ToString()
                     }).ToList();
         }
+
+        private List<Bitacora> ProcesarBitacorasFilteredByUser(DataTable dt, string user)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Bitacora()
+                    {
+                        Cod_Registro = dr["Cod_Registro"].ToString(),
+                        Cod_User_FK = dr["Cod_User_FK"].ToString(),
+                        FechaTime = dr["FechaTime"].ToString(),
+                        Tipo = dr["Tipo"].ToString(),
+                        Time = dr["Time"].ToString(),
+                        Cod_Regis = dr["Cod_Regis"].ToString(),
+                        Descripcion = dr["Descripcion"].ToString(),
+                        RegistroDetalle = dr["Registro_Detalle"].ToString()
+                    }).ToList().Where(x => x.encrypt(user).Equals(x.Cod_User_FK)).ToList();
+        }
+
+        private List<Bitacora> ProcesarBitacorasFilteredByType(DataTable dt, string type)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Bitacora()
+                    {
+                        Cod_Registro = dr["Cod_Registro"].ToString(),
+                        Cod_User_FK = dr["Cod_User_FK"].ToString(),
+                        FechaTime = dr["FechaTime"].ToString(),
+                        Tipo = dr["Tipo"].ToString(),
+                        Time = dr["Time"].ToString(),
+                        Cod_Regis = dr["Cod_Regis"].ToString(),
+                        Descripcion = dr["Descripcion"].ToString(),
+                        RegistroDetalle = dr["Registro_Detalle"].ToString()
+                    }).ToList().Where(x => x.encrypt(type).Equals(x.Tipo)).ToList();
+        }
+
+        private List<Bitacora> ProcesarBitacorasFilteredByTypeAndUser(DataTable dt, string user, string type)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Bitacora()
+                    {
+                        Cod_Registro = dr["Cod_Registro"].ToString(),
+                        Cod_User_FK = dr["Cod_User_FK"].ToString(),
+                        FechaTime = dr["FechaTime"].ToString(),
+                        Tipo = dr["Tipo"].ToString(),
+                        Time = dr["Time"].ToString(),
+                        Cod_Regis = dr["Cod_Regis"].ToString(),
+                        Descripcion = dr["Descripcion"].ToString(),
+                        RegistroDetalle = dr["Registro_Detalle"].ToString()
+                    }).ToList().Where(x => x.encrypt(user).Equals(x.Cod_User_FK) || x.encrypt(type).Equals(x.Tipo)).ToList();
+        }
+
         public string encrypt(string text)
         {
             string encrypted = string.Empty;
