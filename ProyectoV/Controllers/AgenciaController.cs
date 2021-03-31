@@ -42,7 +42,7 @@ namespace ProyectoV.Controllers
             Agencia agency = new Agencia();
             crypting c = new crypting();
 
-            agency.createAirline(ref mensaje_error, ref numero_error, Agencia.GlobalValue = Agencia.GlobalValue + 1, c.encrypt(airline.Nombre_Agencia), c.encrypt(airline.Imagen), airline.Cod_Pais_FK, c.encrypt(airline.Cod_Aerolinea));
+            agency.createAirline(ref mensaje_error, ref numero_error, Agencia.GlobalValue = Agencia.GlobalValue + 1, c.encrypt(airline.Nombre_Agencia), c.encrypt(airline.Imagen), airline.Cod_Pais_FK, c.encrypt(airline.Cod_Aerolinea), airline.UsernameC);
         }
 
         // PUT: api/Agencia/5
@@ -50,7 +50,7 @@ namespace ProyectoV.Controllers
         {
             Agencia agency = new Agencia();
             crypting c = new crypting();
-            agency.update_airline(ref mensaje_error, ref numero_error, airline.Cod_Agencia, c.encrypt(airline.Nombre_Agencia), c.encrypt(airline.Imagen), airline.Cod_Pais_FK, c.encrypt(airline.Cod_Aerolinea));
+            agency.update_airline(ref mensaje_error, ref numero_error, airline.Cod_Agencia, c.encrypt(airline.Nombre_Agencia), c.encrypt(airline.Imagen), airline.Cod_Pais_FK, c.encrypt(airline.Cod_Aerolinea), airline.UsernameC, airline.UserCod);
         }
 
         // DELETE: api/Agencia/5
@@ -58,7 +58,7 @@ namespace ProyectoV.Controllers
         {
             Agencia agency = new Agencia();
             crypting c = new crypting();
-            agency.delete_airline(ref mensaje_error, ref numero_error, airline.Cod_Agencia);
+            agency.delete_airline(ref mensaje_error, ref numero_error, airline.Cod_Agencia, airline.UsernameC, airline.UserCod);
         }
     }
 }

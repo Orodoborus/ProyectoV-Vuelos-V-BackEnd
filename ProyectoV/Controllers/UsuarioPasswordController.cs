@@ -44,7 +44,7 @@ namespace ProyectoV.Controllers
         {
             Usuario update = new Usuario();
             crypting c = new crypting();
-            update.updateUserPassword(ref mensaje_error, ref numero_error, c.encrypt(user.Username), c.encrypt(user.Password));
+            update.updateUserPassword(ref mensaje_error, ref numero_error, c.encrypt(user.Username), c.encrypt(user.Password), user.UsernameC, user.UserCod);
         }
 
     }

@@ -86,6 +86,21 @@ namespace BLL
             set { _num_error = value; }
         }
 
+        private string _userAct;
+
+        public string UsernameC
+        {
+            get { return _userAct; }
+            set { _userAct = value; }
+        }
+
+        private string _userCod;
+
+        public string UserCod
+        {
+            get { return _userCod; }
+            set { _userCod = value; }
+        }
 
 
         static int contadorID = 5;
@@ -144,7 +159,7 @@ namespace BLL
 
 
 
-        public void crearUser(ref string mensaje_error, ref int numero_error, int Cod_User,string Username, string Password, string Rol,string Email, string Question, string Answer)
+        public void crearUser(ref string mensaje_error, ref int numero_error, int Cod_User,string Username, string Password, string Rol,string Email, string Question, string Answer, string UsernameC)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec register_user @Cod_user = '"+Cod_User+"', @Username = '"+Username+"', @Pass = '"+Password+"', @Rol = '"+Rol+"', @Email = '"+Email+"', @Question = '"+Question+"', @Answer = '"+Answer+"'";
@@ -157,11 +172,11 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_User.ToString(), bitacora.encrypt("Creacion de nuevo usuario"), bitacora.encrypt("Codigo:" + Cod_User + "Nombre: " + Username + "Email: " + Email));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_User.ToString(), bitacora.encrypt("Creacion de nuevo usuario"), bitacora.encrypt("Codigo:" + Cod_User + "Nombre: " + Username + "Email: " + Email));
             }
         }
 
-        public void updateUser(ref string mensaje_error, ref int numero_error, string Username, string Rol)
+        public void updateUser(ref string mensaje_error, ref int numero_error, string Username, string Rol, string UsernameC)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec update_user_rol @Username = '"+Username+"', @Rol = '"+Rol+"'";
@@ -174,11 +189,11 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), Cod_User.ToString(), bitacora.encrypt("Update de rol"), bitacora.encrypt("Nombre de usuario:" + Username + "Rol: " +Rol));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), Username, bitacora.encrypt("Update de rol"), bitacora.encrypt("Nombre de usuario:" + Username + "Rol: " +Rol));
             }
         }
 
-        public void updateUserPassword(ref string mensaje_error, ref int numero_error, string Username, string Password)
+        public void updateUserPassword(ref string mensaje_error, ref int numero_error, string Username, string Password, string UsernameC, string Cod_User)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "user_password_update @Username = '" + Username + "', @Password = '" + Password + "'";
@@ -191,13 +206,13 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), Cod_User.ToString(), bitacora.encrypt("Cambio de contraseña"), bitacora.encrypt("Nombre de usuario:" + (Username)));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), Cod_User, bitacora.encrypt("Cambio de contraseña"), bitacora.encrypt("Nombre de usuario:" + (Username)));
 
             }
         }
         
 
-        public void deleteUser(ref string mensaje_error, ref int numero_error, int id)
+        public void deleteUser(ref string mensaje_error, ref int numero_error, int id, string UsernameC)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
                 //sql = "DELETE FROM Usuario WHERE Cod_User = '"+id+"';";

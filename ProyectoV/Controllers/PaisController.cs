@@ -39,7 +39,7 @@ namespace ProyectoV.Controllers
         {
             Pais pais = new Pais();
             crypting c = new crypting();
-            pais.create_country(ref mensaje_error, ref numero_error, country.Cod_Pais, c.encrypt(country.Nombre_Pais), c.encrypt(country.Imagen));
+            pais.create_country(ref mensaje_error, ref numero_error, country.Cod_Pais, c.encrypt(country.Nombre_Pais), c.encrypt(country.Imagen), country.UsernameC);
         }
 
         // PUT: api/Pais/5
@@ -47,7 +47,7 @@ namespace ProyectoV.Controllers
         {
             Pais pais = new Pais();
             crypting c = new crypting();
-            pais.update_country(ref mensaje_error, ref numero_error, country.Cod_Pais, country.Cod_Pais2, c.encrypt(country.Nombre_Pais), c.encrypt(country.Imagen));
+            pais.update_country(ref mensaje_error, ref numero_error, country.Cod_Pais, country.Cod_Pais2, c.encrypt(country.Nombre_Pais), c.encrypt(country.Imagen), country.UsernameC, country.UserCod);
         }
 
         // DELETE: api/Pais/5
@@ -55,7 +55,7 @@ namespace ProyectoV.Controllers
         {
             Pais pais = new Pais();
             crypting c = new crypting();
-            pais.delete_country(ref mensaje_error, ref numero_error, country.Cod_Pais);
+            pais.delete_country(ref mensaje_error, ref numero_error, country.Cod_Pais, country.UsernameC, country.UserCod);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace ProyectoV.Controllers
         {
             Puerta puerta = new Puerta();
             crypting c = new crypting();
-            puerta.createGate(ref mensaje_error, ref numero_error, gate.Cod_Puerta, c.encrypt(gate.Numero_Puerta), c.encrypt(gate.Detalle));
+            puerta.createGate(ref mensaje_error, ref numero_error, gate.Cod_Puerta, c.encrypt(gate.Numero_Puerta), c.encrypt(gate.Detalle), gate.UsernameC);
         }
 
         // PUT: api/Puerta/5
@@ -47,7 +47,7 @@ namespace ProyectoV.Controllers
         {
             Puerta puerta = new Puerta();
             crypting c = new crypting();
-            puerta.updateGate(ref mensaje_error, ref numero_error, gate.Cod_Puerta, gate.Cod_Puerta2, c.encrypt(gate.Numero_Puerta), c.encrypt(gate.Detalle));
+            puerta.updateGate(ref mensaje_error, ref numero_error, gate.Cod_Puerta, gate.Cod_Puerta2, c.encrypt(gate.Numero_Puerta), c.encrypt(gate.Detalle), gate.UsernameC, gate.UserCod);
         }
 
         // DELETE: api/Puerta/5
@@ -55,7 +55,7 @@ namespace ProyectoV.Controllers
         {
             Puerta puerta = new Puerta();
             crypting c = new crypting();
-            puerta.delete_gate(ref mensaje_error, ref numero_error, gate.Cod_Puerta);
+            puerta.delete_gate(ref mensaje_error, ref numero_error, gate.Cod_Puerta, gate.UsernameC,gate.UserCod);
         }
     }
 }

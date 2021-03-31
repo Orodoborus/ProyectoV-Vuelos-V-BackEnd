@@ -31,7 +31,7 @@ namespace ProyectoV.Controllers
             Bitacora x = bitacoras.ElementAt(id);
             Bitacora spes = new Bitacora();
             spes.Cod_Registro = x.Cod_Registro;
-            spes.Cod_User_FK = x.Cod_User_FK;
+            spes.Cod_User_FK = c.decrypt(x.Cod_User_FK);
             spes.FechaTime = c.decrypt(x.FechaTime);
             spes.Tipo = c.decrypt(x.Tipo);
             spes.Time = c.decrypt(x.Time);

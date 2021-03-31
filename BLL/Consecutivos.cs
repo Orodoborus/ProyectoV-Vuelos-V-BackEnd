@@ -60,6 +60,21 @@ namespace BLL
             set { _rango_fin = value; }
         }
 
+        private string _userAct;
+
+        public string UsernameC
+        {
+            get { return _userAct; }
+            set { _userAct = value; }
+        }
+
+        private string _userCod;
+
+        public string UserCod
+        {
+            get { return _userCod; }
+            set { _userCod = value; }
+        }
 
         static int consID = 5;
 
@@ -116,7 +131,7 @@ namespace BLL
             }
         }
 
-        public void createCons(ref string mensaje_error, ref int numero_error, int Codigo_Consecutivo, string Descripcion,string Valor, string prefijo, string Rango_ini, string Rango_Fin)
+        public void createCons(ref string mensaje_error, ref int numero_error, int Codigo_Consecutivo, string Descripcion,string Valor, string prefijo, string Rango_ini, string Rango_Fin, string UsernameC)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec create_new_consecutive @Codigo_Consecutivo = "+Codigo_Consecutivo+", @Descripcion = '"+ Descripcion +
@@ -131,11 +146,11 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Codigo_Consecutivo.ToString(), bitacora.encrypt("Creacion de consecutivo"), bitacora.encrypt("Codigo:" + Codigo_Consecutivo.ToString() + "Descripcion: " + Descripcion + "Valor: " + Valor));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Codigo_Consecutivo.ToString(), bitacora.encrypt("Creacion de consecutivo"), bitacora.encrypt("Codigo:" + Codigo_Consecutivo.ToString() + "Descripcion: " + Descripcion + "Valor: " + Valor));
             }
         }
 
-        public void updateCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor, string prefijo, string Rango_ini, string Rango_fin)
+        public void updateCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor, string prefijo, string Rango_ini, string Rango_fin, string UsernameC, string ConsCod)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec consecutive_update_cambios @Descripcion = '" + Descripcion + "', @Valor = '" + Valor + "', @Prefijo = '" + prefijo + "', @Rango_ini = '" + Rango_ini + "', @Rango_fin = '" + Rango_fin + "'";
@@ -149,11 +164,11 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de un consecutivo"), bitacora.encrypt("Descripcion:" + (Descripcion) + "Valor: " + (Valor) + "Prefijo: " + (Prefijo)));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), ConsCod, bitacora.encrypt("Update de un consecutivo"), bitacora.encrypt("Descripcion:" + (Descripcion) + "Valor: " + (Valor) + "Prefijo: " + (Prefijo)));
             }
         }
 
-        public void updateSpecificCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor, string Rango_Ini)
+        public void updateSpecificCons(ref string mensaje_error, ref int numero_error, string Descripcion, string Valor, string Rango_Ini, string UsernameC)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec update_cons_ID @Description = '" + Descripcion + "', @Valor = '" + Valor + "', @Rango_Ini = '"+Rango_Ini+"'";
@@ -164,11 +179,11 @@ namespace BLL
                 Errors e = new Errors();
                 e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
             }
-            else
-            {
-                Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de un consecutivo especifico"), bitacora.encrypt("Descripcion:" + (Descripcion) + "Valor: " + (Valor) + "Rango Ini: " + (Rango_Ini)));
-            }
+            //else
+            //{
+            //    Bitacora bitacora = new Bitacora();
+            //    bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de un consecutivo especifico"), bitacora.encrypt("Descripcion:" + (Descripcion) + "Valor: " + (Valor) + "Rango Ini: " + (Rango_Ini)));
+            //}
         }
 
         private List<Consecutivos> procesarConsecutivos(DataTable dt)

@@ -43,7 +43,7 @@ namespace ProyectoV.Controllers
         {
             Consecutivos x = new Consecutivos();
             crypting c = new crypting();
-            x.createCons(ref mensaje_error, ref numero_error, Consecutivos.GlobalValue = Consecutivos.GlobalValue + 1, c.encrypt(cons.Descripcion),c.encrypt(cons.Valor), c.encrypt(cons.Prefijo), c.encrypt(cons.Rango_Ini), c.encrypt(cons.Rango_Fin));
+            x.createCons(ref mensaje_error, ref numero_error, Consecutivos.GlobalValue = Consecutivos.GlobalValue + 1, c.encrypt(cons.Descripcion),c.encrypt(cons.Valor), c.encrypt(cons.Prefijo), c.encrypt(cons.Rango_Ini), c.encrypt(cons.Rango_Fin), cons.UsernameC);
         }
 
         // PUT: api/Consecutivos/5
@@ -51,7 +51,7 @@ namespace ProyectoV.Controllers
         {
             Consecutivos x = new Consecutivos();
             crypting c = new crypting();
-            x.updateCons(ref mensaje_error, ref numero_error, c.encrypt(cons.Descripcion), c.encrypt(cons.Valor), c.encrypt(cons.Prefijo), c.encrypt(cons.Rango_Ini), c.encrypt(cons.Rango_Fin));
+            x.updateCons(ref mensaje_error, ref numero_error, c.encrypt(cons.Descripcion), c.encrypt(cons.Valor), c.encrypt(cons.Prefijo), c.encrypt(cons.Rango_Ini), c.encrypt(cons.Rango_Fin), cons.UsernameC, cons.UserCod);
         }
 
         // DELETE: api/Consecutivos/5

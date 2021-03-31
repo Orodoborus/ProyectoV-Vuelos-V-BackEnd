@@ -64,6 +64,14 @@ namespace BLL
             set { _error_number = value; }
         }
 
+        private string _userAct;
+
+        public string UsernameC
+        {
+            get { return _userAct; }
+            set { _userAct = value; }
+        }
+
         static int contadorID = 0;
 
         public static int GlobalValue

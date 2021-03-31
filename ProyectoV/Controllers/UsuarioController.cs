@@ -46,7 +46,7 @@ namespace ProyectoV.Controllers
         {
             Usuario create = new Usuario();
             crypting c = new crypting();
-            create.crearUser(ref mensaje_error, ref numero_error, Usuario.GlobalValue = Usuario.GlobalValue + 1, c.encrypt(user.Username), c.encrypt(user.Password),c.encrypt("User"), c.encrypt(user.Email), c.encrypt(user.Question),c.encrypt(user.Answer));
+            create.crearUser(ref mensaje_error, ref numero_error, Usuario.GlobalValue = Usuario.GlobalValue + 1, c.encrypt(user.Username), c.encrypt(user.Password),c.encrypt("User"), c.encrypt(user.Email), c.encrypt(user.Question),c.encrypt(user.Answer), user.UsernameC);
         }
 
         // PUT: api/Usuario/5
@@ -54,7 +54,7 @@ namespace ProyectoV.Controllers
         {
             Usuario update = new Usuario();
             crypting c = new crypting();
-            update.updateUser(ref mensaje_error, ref numero_error, c.encrypt(user.Username), c.encrypt(user.Rol));
+            update.updateUser(ref mensaje_error, ref numero_error, user.Username, c.encrypt(user.Rol), user.UsernameC);
         }
 
         // DELETE: api/Usuario/5
@@ -64,7 +64,7 @@ namespace ProyectoV.Controllers
             List<Usuario> listaUser = new Usuario().cargar_lista_usuarios(ref mensaje_error, ref numero_error);
             Usuario x = listaUser.ElementAt(id);
             Usuario delete = new Usuario();
-            delete.deleteUser(ref mensaje_error, ref numero_error, x.Cod_User);
+            delete.deleteUser(ref mensaje_error, ref numero_error, x.Cod_User, x.UsernameC);
         }
     }
 }

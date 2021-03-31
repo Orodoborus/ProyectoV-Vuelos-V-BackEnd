@@ -44,6 +44,22 @@ namespace BLL
             set { _detalle = value; }
         }
 
+        private string _userAct;
+
+        public string UsernameC
+        {
+            get { return _userAct; }
+            set { _userAct = value; }
+        }
+
+        private string _userCod;
+
+        public string UserCod
+        {
+            get { return _userCod; }
+            set { _userCod = value; }
+        }
+
         static string Details = "";
 
         public static string GlobalValueDetail
@@ -124,7 +140,7 @@ namespace BLL
             }
         }
 
-        public void createGate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string Numero_Puerta, string Detalle)
+        public void createGate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string Numero_Puerta, string Detalle, string UsernameC)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec create_new_gate @Cod_Puerta = '"+Cod_Puerta+"', @Numero_Puerta = '"+Numero_Puerta+"', @Detalle = '"+Detalle+"'";
@@ -138,10 +154,10 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_Puerta, bitacora.encrypt("Creacion de nueva puerta"), bitacora.encrypt("Codigo:" + Cod_Puerta + "Numero: " + Numero_Puerta + "Detalle: " + Detalle));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Cod_Puerta, bitacora.encrypt("Creacion de nueva puerta"), bitacora.encrypt("Codigo:" + Cod_Puerta + "Numero: " + Numero_Puerta + "Detalle: " + Detalle));
             }
         }
-        public void updateGate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string Cod_Puerta2, string Numero_Puerta, string Detalle)
+        public void updateGate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string Cod_Puerta2, string Numero_Puerta, string Detalle, string UsernameC, string GateCod)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec update_ecist_gate @Cod_Puerta = '" + Cod_Puerta + "', @Cod_Puerta2 = '" +Cod_Puerta2+"' , @Numero_Puerta = '" + Numero_Puerta + "', @Detalle = '" + Detalle + "'";
@@ -155,11 +171,11 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), "5", bitacora.encrypt("Update de una puerta"), bitacora.encrypt("Codigo:" + Cod_Puerta + "Numero: " + Numero_Puerta + "Detalle: " + Detalle));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Update"), bitacora.encrypt(time), GateCod, bitacora.encrypt("Update de una puerta"), bitacora.encrypt("Codigo:" + Cod_Puerta + "Numero: " + Numero_Puerta + "Detalle: " + Detalle));
             }
         }
 
-        public void delete_gate(ref string mensaje_error, ref int numero_error, string Cod_Puerta)
+        public void delete_gate(ref string mensaje_error, ref int numero_error, string Cod_Puerta, string UsernameC, string GateCode)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             sql = "exec delete_gate @Cod_Puerta = '"+Cod_Puerta+"'";
@@ -173,7 +189,7 @@ namespace BLL
             else
             {
                 Bitacora bitacora = new Bitacora();
-                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), "1", bitacora.encrypt(date), bitacora.encrypt("Delete"), bitacora.encrypt(time), "5", bitacora.encrypt("Delete de una puerta"), bitacora.encrypt("Codigo:" + Cod_Puerta));
+                bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Delete"), bitacora.encrypt(time), GateCode, bitacora.encrypt("Delete de una puerta"), bitacora.encrypt("Codigo:" + Cod_Puerta));
             }
         }
 

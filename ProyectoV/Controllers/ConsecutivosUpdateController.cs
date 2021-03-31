@@ -45,12 +45,12 @@ namespace ProyectoV.Controllers
             int valor = Convert.ToInt32(cons.Valor) + 1;
             if(cons.Rango_Ini == "")
             {
-                x.updateSpecificCons(ref mensaje_error, ref numero_error, c.encrypt(cons.Descripcion), c.encrypt(valor.ToString()), c.encrypt(cons.Rango_Ini));
+                x.updateSpecificCons(ref mensaje_error, ref numero_error, c.encrypt(cons.Descripcion), c.encrypt(valor.ToString()), c.encrypt(cons.Rango_Ini), cons.UsernameC);
             }
             else
             {
                 int rango_ini = Convert.ToInt32(cons.Rango_Ini) + 1;
-                x.updateSpecificCons(ref mensaje_error, ref numero_error, c.encrypt(cons.Descripcion), c.encrypt(valor.ToString()), c.encrypt(rango_ini.ToString()));
+                x.updateSpecificCons(ref mensaje_error, ref numero_error, c.encrypt(cons.Descripcion), c.encrypt(valor.ToString()), c.encrypt(rango_ini.ToString()), cons.UsernameC);
             }
             
         }
