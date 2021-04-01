@@ -169,8 +169,12 @@
     <Compile Include="Controllers\AgenciaAeroCountryController.cs" />
     <Compile Include="Controllers\AgenciaController.cs" />
     <Compile Include="Controllers\BitacoraController.cs" />
+    <Compile Include="Controllers\BitacoraFilterByDateRangeController.cs" />
+    <Compile Include="Controllers\BitacorasRangoFechaAndUserController.cs" />
+    <Compile Include="Controllers\BitacoraTypeAndDateFilterController.cs" />
     <Compile Include="Controllers\BitacoraTypeAndUserFilterController.cs" />
     <Compile Include="Controllers\BitacoraTypeFilteredController.cs" />
+    <Compile Include="Controllers\BitacoraTypeUserRangeDatesFilterController.cs" />
     <Compile Include="Controllers\BitacoraUserFilteredController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\ConsecutivosController.cs" />

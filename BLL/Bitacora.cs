@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
+using System.Globalization;
 
 namespace BLL
 {
@@ -84,8 +85,24 @@ namespace BLL
             set { _userAct = value; }
         }
 
+        private string _date1;
 
-        static int contadorID = 0;
+        public string date1
+        {
+            get { return _date1; }
+            set { _date1 = value; }
+        }
+
+        private string _date2;
+
+        public string date2
+        {
+            get { return _date2; }
+            set { _date2 = value; }
+        }
+
+
+        static int contadorID = 15;
 
         public static int GlobalValue
         {
@@ -126,6 +143,35 @@ namespace BLL
                 TypeFilter = value;
             }
         }
+
+        static string dateIniFilter = "";
+
+        public static string GlobalValueFilterDateIni
+        {
+            get
+            {
+                return dateIniFilter;
+            }
+            set
+            {
+                dateIniFilter = value;
+            }
+        }
+
+        static string dateFinFilter = "";
+
+        public static string GlobalValueFilterDateFin
+        {
+            get
+            {
+                return dateFinFilter;
+            }
+            set
+            {
+                dateFinFilter = value;
+            }
+        }
+
         #endregion
 
 
@@ -229,6 +275,94 @@ namespace BLL
             }
         }
 
+        public List<Bitacora> GetBitacorasUserFilteredbyDateRange(ref string mensaje_error, ref int numero_error, string date1, string date2)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_bitacoras";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ProcesarBitacorasFilteredByDateRange(ds.Tables[0], date1, date2);
+                }
+            }
+        }
+
+        public List<Bitacora> GetBitacorasUserFilteredbyDateRangeAndTypeAndUser(ref string mensaje_error, ref int numero_error,string user, string type, string date1, string date2)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_bitacoras";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ProcesarBitacorasFilteredByDateRangeAndUserAndType(ds.Tables[0],user, type, date1, date2);
+                }
+            }
+        }
+
+        public List<Bitacora> GetBitacorasUserFilteredbyDateRangeAndType(ref string mensaje_error, ref int numero_error, string type, string date1, string date2)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_bitacoras";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ProcesarBitacorasFilteredByDateRangeAndType(ds.Tables[0], type, date1, date2);
+                }
+            }
+        }
+
+        public List<Bitacora> GetBitacorasUserFilteredbyDateRangeAndUser(ref string mensaje_error, ref int numero_error, string user, string date1, string date2)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_bitacoras";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ProcesarBitacorasFilteredByDateRangeAndUser(ds.Tables[0], user, date1, date2);
+                }
+            }
+        }
+
 
         public void CreateBitacora(ref string mensaje_error, ref int numero_error, string Cod_Registro, string Cod_User_FK, string FechaTime, string Tipo, string Time, string Cod_Regis, string Descripcion, string Registro_Detalle)
         {
@@ -299,6 +433,76 @@ namespace BLL
                         Descripcion = dr["Descripcion"].ToString(),
                         RegistroDetalle = dr["Registro_Detalle"].ToString()
                     }).ToList().Where(x => x.encrypt(user).Equals(x.Cod_User_FK) && x.encrypt(type).Equals(x.Tipo)).ToList();
+        }
+
+        private List<Bitacora> ProcesarBitacorasFilteredByDateRange(DataTable dt, string date1, string date2)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Bitacora()
+                    {
+                        Cod_Registro = dr["Cod_Registro"].ToString(),
+                        Cod_User_FK = dr["Cod_User_FK"].ToString(),
+                        FechaTime = dr["FechaTime"].ToString(),
+                        Tipo = dr["Tipo"].ToString(),
+                        Time = dr["Time"].ToString(),
+                        Cod_Regis = dr["Cod_Regis"].ToString(),
+                        Descripcion = dr["Descripcion"].ToString(),
+                        RegistroDetalle = dr["Registro_Detalle"].ToString()
+                    }).ToList().Where(x => DateTime.ParseExact(convertion(x.FechaTime),"dd-MM-yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(date1, "dd-MM-yyyy", CultureInfo.InvariantCulture) && DateTime.ParseExact(convertion(x.FechaTime), "dd-MM-yyyy", CultureInfo.InvariantCulture) <= DateTime.ParseExact(date2, "dd-MM-yyyy", CultureInfo.InvariantCulture)).ToList();
+        }
+
+        private List<Bitacora> ProcesarBitacorasFilteredByDateRangeAndUserAndType(DataTable dt, string user, string type, string date1, string date2)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Bitacora()
+                    {
+                        Cod_Registro = dr["Cod_Registro"].ToString(),
+                        Cod_User_FK = dr["Cod_User_FK"].ToString(),
+                        FechaTime = dr["FechaTime"].ToString(),
+                        Tipo = dr["Tipo"].ToString(),
+                        Time = dr["Time"].ToString(),
+                        Cod_Regis = dr["Cod_Regis"].ToString(),
+                        Descripcion = dr["Descripcion"].ToString(),
+                        RegistroDetalle = dr["Registro_Detalle"].ToString()
+                    }).ToList().Where(x => x.encrypt(user).Equals(x.Cod_User_FK) && x.encrypt(type).Equals(x.Tipo) && DateTime.ParseExact(convertion(x.FechaTime), "dd-MM-yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(date1, "dd-MM-yyyy", CultureInfo.InvariantCulture) && DateTime.ParseExact(convertion(x.FechaTime), "dd-MM-yyyy", CultureInfo.InvariantCulture) <= DateTime.ParseExact(date2, "dd-MM-yyyy", CultureInfo.InvariantCulture)).ToList();
+        }
+
+        private List<Bitacora> ProcesarBitacorasFilteredByDateRangeAndUser(DataTable dt, string user, string date1, string date2)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Bitacora()
+                    {
+                        Cod_Registro = dr["Cod_Registro"].ToString(),
+                        Cod_User_FK = dr["Cod_User_FK"].ToString(),
+                        FechaTime = dr["FechaTime"].ToString(),
+                        Tipo = dr["Tipo"].ToString(),
+                        Time = dr["Time"].ToString(),
+                        Cod_Regis = dr["Cod_Regis"].ToString(),
+                        Descripcion = dr["Descripcion"].ToString(),
+                        RegistroDetalle = dr["Registro_Detalle"].ToString()
+                    }).ToList().Where(x => x.encrypt(user).Equals(x.Cod_User_FK) && DateTime.ParseExact(convertion(x.FechaTime), "dd-MM-yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(date1, "dd-MM-yyyy", CultureInfo.InvariantCulture) && DateTime.ParseExact(convertion(x.FechaTime), "dd-MM-yyyy", CultureInfo.InvariantCulture) <= DateTime.ParseExact(date2, "dd-MM-yyyy", CultureInfo.InvariantCulture)).ToList();
+        }
+
+        private List<Bitacora> ProcesarBitacorasFilteredByDateRangeAndType(DataTable dt, string type, string date1, string date2)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Bitacora()
+                    {
+                        Cod_Registro = dr["Cod_Registro"].ToString(),
+                        Cod_User_FK = dr["Cod_User_FK"].ToString(),
+                        FechaTime = dr["FechaTime"].ToString(),
+                        Tipo = dr["Tipo"].ToString(),
+                        Time = dr["Time"].ToString(),
+                        Cod_Regis = dr["Cod_Regis"].ToString(),
+                        Descripcion = dr["Descripcion"].ToString(),
+                        RegistroDetalle = dr["Registro_Detalle"].ToString()
+                    }).ToList().Where(x => x.encrypt(type).Equals(x.Tipo) && DateTime.ParseExact(convertion(x.FechaTime), "dd-MM-yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(date1, "dd-MM-yyyy", CultureInfo.InvariantCulture) && DateTime.ParseExact(convertion(x.FechaTime), "dd-MM-yyyy", CultureInfo.InvariantCulture) <= DateTime.ParseExact(date2, "dd-MM-yyyy", CultureInfo.InvariantCulture)).ToList();
+        }
+
+        private string convertion(string v)
+        {
+            Bitacora b = new Bitacora();
+            return b.decrypt(v);
         }
 
         public string encrypt(string text)
