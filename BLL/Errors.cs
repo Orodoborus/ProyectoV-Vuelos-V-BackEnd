@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -86,6 +87,51 @@ namespace BLL
             }
         }
 
+        static string dateIniFilter = "";
+
+        public static string GlobalValueFilterDateIni
+        {
+            get
+            {
+                return dateIniFilter;
+            }
+            set
+            {
+                dateIniFilter = value;
+            }
+        }
+
+        static string dateFinFilter = "";
+
+        public static string GlobalValueFilterDateFin
+        {
+            get
+            {
+                return dateFinFilter;
+            }
+            set
+            {
+                dateFinFilter = value;
+            }
+        }
+
+        private string _date1;
+
+        public string date1
+        {
+            get { return _date1; }
+            set { _date1 = value; }
+        }
+
+        private string _date2;
+
+        public string date2
+        {
+            get { return _date2; }
+            set { _date2 = value; }
+        }
+
+
 
         #endregion
 
@@ -147,6 +193,53 @@ namespace BLL
             ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
         }
 
+        public List<Errors> GetErrorsUserFilteredbyDateRange(ref string mensaje_error, ref int numero_error, string date1, string date2)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_errors";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ProcesarErrorsFilteredByDateRange(ds.Tables[0], date1, date2);
+                }
+            }
+        }
+
+        private List<Errors> ProcesarErrorsFilteredByDateRange(DataTable dt, string date1, string date2)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Errors()
+                    {
+                        Error_ID = dr["Error_ID"].ToString(),
+                        Error_Message = dr["Error_Message"].ToString(),
+                        Time = dr["Time"].ToString(),
+                        Date = dr["Date"].ToString(),
+                        Error_Number = dr["Error_Number"].ToString()
+                    }).ToList().Where(x => DateTime.ParseExact(convertion(x.Date), "dd-MM-yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(date1, "dd-MM-yyyy", CultureInfo.InvariantCulture) && DateTime.ParseExact(convertion(x.Date), "dd-MM-yyyy", CultureInfo.InvariantCulture) <= DateTime.ParseExact(date2, "dd-MM-yyyy", CultureInfo.InvariantCulture)).ToList();
+        }
+
+
+        private string convertion(string v)
+        {
+            Errors b = new Errors();
+            return b.decrypt(v);
+        }
+
+
+
+
+
+
         private List<Errors> procesarErrores(DataTable dt)
         {
             return (from DataRow dr in dt.Rows
@@ -169,6 +262,16 @@ namespace BLL
             encrypted = Convert.ToBase64String(encrypt);
             return encrypted;
         }
+
+        public string decrypt(string text)
+        {
+            string decrypted = string.Empty;
+            Byte[] decrypt = Convert.FromBase64String(text);
+            decrypted = new UnicodeEncoding().GetString(decrypt);
+            return decrypted;
+        }
+
+
 
 
 

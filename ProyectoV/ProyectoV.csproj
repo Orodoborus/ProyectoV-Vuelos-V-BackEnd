@@ -180,6 +180,7 @@
     <Compile Include="Controllers\ConsecutivosController.cs" />
     <Compile Include="Controllers\ConsecutivosUpdateController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
+    <Compile Include="Controllers\ErrorsFilterByDateRangeController.cs" />
     <Compile Include="Controllers\FilteredAgencyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
