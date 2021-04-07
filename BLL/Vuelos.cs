@@ -76,6 +76,14 @@ namespace BLL
             set { _cs = value; }
         }
 
+        private string _price;
+
+        public string Price
+        {
+            get { return _price; }
+            set { _price = value; }
+        }
+
         private string _userAct;
 
         public string UsernameC
@@ -83,6 +91,16 @@ namespace BLL
             get { return _userAct; }
             set { _userAct = value; }
         }
+
+        private string _cod2;
+
+        public string Codigo_Vuelo2
+        {
+            get { return _cod2; }
+            set { _cod2 = value; }
+        }
+
+
         #endregion
 
         #region variables privadas
@@ -91,9 +109,89 @@ namespace BLL
         int numero_error;
         string sql;
         DataSet ds;
+        string time = DateTime.Now.ToString("H:mm");
+        string date = DateTime.Now.ToString("dd-MM-yyyy");
         #endregion
 
         #region Methods
+
+        public List<Vuelos> GetFlights(ref string mensaje_error, ref int numero_error)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_flights";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return getAllFlights(ds.Tables[0]);
+                }
+            }
+        }
+
+        public void createFlight(ref string mensaje_error, ref int numero_error, string Codigo_Vuelo, string Aerolinea, string Cod_PaisFK, string Fecha, string Hora, string Estado, string Cod_Puerta_FK, string CS, string Price, string UsernameC)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "exec create_new_flight @Codigo_Vuelo = '" + Codigo_Vuelo + "', @Aerolinea = '" + Aerolinea + "', @Cod_Pais_FK = '" + Cod_PaisFK + "', @Fecha = '"+Fecha+ "', @Hora = '"+Hora+ "', @Estado = '"+Estado+"', " +
+                "@Cod_Puerta_FK = '"+Cod_Puerta_FK+ "', @CS = '"+CS+ "', @Price = '" + Price + "'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
+            //else
+            //{
+            //    Bitacora bitacora = new Bitacora();
+            //    bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Codigo_Vuelo, bitacora.encrypt("Creacion de nuevo vuelo"), bitacora.encrypt("-"));
+            //}
+        }
+
+        public void UpdateFlight(ref string mensaje_error, ref int numero_error, string Codigo_Vuelo,string CodigoVuelo2, string Aerolinea, string Cod_PaisFK, string Fecha, string Hora, string Estado, string Cod_Puerta_FK, string CS,string Price, string UsernameC)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "exec update_flight @Codigo_Vuelo = '" + Codigo_Vuelo + "', @Codigo_Vuelo2 = '"+CodigoVuelo2+"', @Aerolinea = '" + Aerolinea + "', @Cod_Pais_FK = '" + Cod_PaisFK + "', @Fecha = '" + Fecha + "', @Hora = '" + Hora + "', @Estado = '" + Estado + "', " +
+                "@Cod_Puerta_FK = '" + Cod_Puerta_FK + "', @CS = '" + CS + "', @Price = '"+Price+"'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
+            //else
+            //{
+            //    Bitacora bitacora = new Bitacora();
+            //    bitacora.CreateBitacora(ref mensaje_error, ref numero_error, (Bitacora.GlobalValue = Bitacora.GlobalValue + 1).ToString(), bitacora.encrypt(UsernameC), bitacora.encrypt(date), bitacora.encrypt("Create"), bitacora.encrypt(time), Codigo_Vuelo, bitacora.encrypt("Creacion de nuevo vuelo"), bitacora.encrypt("-"));
+            //}
+        }
+
+
+        private List<Vuelos> getAllFlights(DataTable dt)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Vuelos()
+                    {
+                        Codigo_Vuelo = dr["Codigo_Vuelo"].ToString(),
+                        Aerolinea = dr["Aerolinea"].ToString(),
+                        Cod_Pais_FK = dr["Cod_Pais_FK"].ToString(),
+                        Fecha = dr["Fecha"].ToString(),
+                        Hora = dr["Hora"].ToString(),
+                        Estado = dr["Estado"].ToString(),
+                        Cod_Puerta_FK = dr["Cod_Puerta_FK"].ToString(),
+                        CS = dr["CS"].ToString(),
+                        Price = dr["Price"].ToString()
+                    }).ToList();
+        }
 
         #endregion
     }

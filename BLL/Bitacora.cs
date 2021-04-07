@@ -174,8 +174,6 @@ namespace BLL
 
         #endregion
 
-
-
         #region variables privadas
         SqlConnection connection;
         string mensaje_error;
