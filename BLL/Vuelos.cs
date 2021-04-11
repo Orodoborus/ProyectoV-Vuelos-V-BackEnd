@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -136,6 +137,115 @@ namespace BLL
                 }
             }
         }
+        public List<Vuelos> GetFlightsS(ref string mensaje_error, ref int numero_error)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_flights";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return getAllFlightsS(ds.Tables[0]);
+                }
+            }
+        }
+        public List<Vuelos> GetFlightsBUY(ref string mensaje_error, ref int numero_error)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_flights";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return getAllFlightsBUY(ds.Tables[0]);
+                }
+            }
+        }
+
+        public List<Vuelos> GetFlightsSArribo(ref string mensaje_error, ref int numero_error)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_flights";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return getAllFlightsSArribo(ds.Tables[0]);
+                }
+            }
+        }
+
+        public List<Vuelos> GetFlightsYArribo(ref string mensaje_error, ref int numero_error)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_flights";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return getAllFlightsYArribo(ds.Tables[0]);
+                }
+            }
+        }
+
+        public List<Vuelos> GetFlightsY(ref string mensaje_error, ref int numero_error)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            if (connection == null)
+            {
+                return null;
+            }
+            else
+            {
+                sql = "exec get_all_flights";
+                ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+                if (numero_error != 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return getAllFlightsY(ds.Tables[0]);
+                }
+            }
+        }
+
 
         public void createFlight(ref string mensaje_error, ref int numero_error, string Codigo_Vuelo, string Aerolinea, string Cod_PaisFK, string Fecha, string Hora, string Estado, string Cod_Puerta_FK, string CS, string Price, string UsernameC)
         {
@@ -191,6 +301,103 @@ namespace BLL
                         CS = dr["CS"].ToString(),
                         Price = dr["Price"].ToString()
                     }).ToList();
+        }
+
+        private List<Vuelos> getAllFlightsBUY(DataTable dt)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Vuelos()
+                    {
+                        Codigo_Vuelo = dr["Codigo_Vuelo"].ToString(),
+                        Aerolinea = dr["Aerolinea"].ToString(),
+                        Cod_Pais_FK = dr["Cod_Pais_FK"].ToString(),
+                        Fecha = dr["Fecha"].ToString(),
+                        Hora = dr["Hora"].ToString(),
+                        Estado = dr["Estado"].ToString(),
+                        Cod_Puerta_FK = dr["Cod_Puerta_FK"].ToString(),
+                        CS = dr["CS"].ToString(),
+                        Price = dr["Price"].ToString()
+                    }).ToList().Where(x => x.CS.Equals("S") && DateTime.ParseExact(convertion(x.Fecha), "dd-MM-yyyy", CultureInfo.InvariantCulture) > DateTime.ParseExact(date.ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture)).ToList(); ;
+        }
+
+        private List<Vuelos> getAllFlightsS(DataTable dt)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Vuelos()
+                    {
+                        Codigo_Vuelo = dr["Codigo_Vuelo"].ToString(),
+                        Aerolinea = dr["Aerolinea"].ToString(),
+                        Cod_Pais_FK = dr["Cod_Pais_FK"].ToString(),
+                        Fecha = dr["Fecha"].ToString(),
+                        Hora = dr["Hora"].ToString(),
+                        Estado = dr["Estado"].ToString(),
+                        Cod_Puerta_FK = dr["Cod_Puerta_FK"].ToString(),
+                        CS = dr["CS"].ToString(),
+                        Price = dr["Price"].ToString()
+                    }).ToList().Where(x => x.CS.Equals("S") && DateTime.ParseExact(convertion(x.Fecha), "dd-MM-yyyy", CultureInfo.InvariantCulture) < DateTime.ParseExact(date.ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture)).ToList();
+        }
+
+        private List<Vuelos> getAllFlightsYArribo(DataTable dt)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Vuelos()
+                    {
+                        Codigo_Vuelo = dr["Codigo_Vuelo"].ToString(),
+                        Aerolinea = dr["Aerolinea"].ToString(),
+                        Cod_Pais_FK = dr["Cod_Pais_FK"].ToString(),
+                        Fecha = dr["Fecha"].ToString(),
+                        Hora = dr["Hora"].ToString(),
+                        Estado = dr["Estado"].ToString(),
+                        Cod_Puerta_FK = dr["Cod_Puerta_FK"].ToString(),
+                        CS = dr["CS"].ToString(),
+                        Price = dr["Price"].ToString()
+                    }).ToList().Where(x => x.CS.Equals("Y") && x.Estado.Equals(encryption("Arribo")) && DateTime.ParseExact(convertion(x.Fecha), "dd-MM-yyyy", CultureInfo.InvariantCulture) < DateTime.ParseExact(date.ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture)).ToList();
+        }
+
+        private List<Vuelos> getAllFlightsSArribo(DataTable dt)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Vuelos()
+                    {
+                        Codigo_Vuelo = dr["Codigo_Vuelo"].ToString(),
+                        Aerolinea = dr["Aerolinea"].ToString(),
+                        Cod_Pais_FK = dr["Cod_Pais_FK"].ToString(),
+                        Fecha = dr["Fecha"].ToString(),
+                        Hora = dr["Hora"].ToString(),
+                        Estado = dr["Estado"].ToString(),
+                        Cod_Puerta_FK = dr["Cod_Puerta_FK"].ToString(),
+                        CS = dr["CS"].ToString(),
+                        Price = dr["Price"].ToString()
+                    }).ToList().Where(x => x.CS.Equals("S") && x.Estado.Equals(encryption("Arribo")) && DateTime.ParseExact(convertion(x.Fecha), "dd-MM-yyyy", CultureInfo.InvariantCulture) < DateTime.ParseExact(date.ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture)).ToList();
+        }
+
+        private string convertion(string v)
+        {
+            Bitacora b = new Bitacora();
+            return b.decrypt(v);
+        }
+
+        private string encryption(string v)
+        {
+            Bitacora b = new Bitacora();
+            return b.encrypt(v);
+        }
+
+        private List<Vuelos> getAllFlightsY(DataTable dt)
+        {
+            return (from DataRow dr in dt.Rows
+                    select new Vuelos()
+                    {
+                        Codigo_Vuelo = dr["Codigo_Vuelo"].ToString(),
+                        Aerolinea = dr["Aerolinea"].ToString(),
+                        Cod_Pais_FK = dr["Cod_Pais_FK"].ToString(),
+                        Fecha = dr["Fecha"].ToString(),
+                        Hora = dr["Hora"].ToString(),
+                        Estado = dr["Estado"].ToString(),
+                        Cod_Puerta_FK = dr["Cod_Puerta_FK"].ToString(),
+                        CS = dr["CS"].ToString(),
+                        Price = dr["Price"].ToString()
+                    }).ToList().Where(x => x.CS.Equals("Y")).ToList();
         }
 
         #endregion

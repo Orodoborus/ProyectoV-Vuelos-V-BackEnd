@@ -176,6 +176,7 @@
     <Compile Include="Controllers\BitacoraTypeFilteredController.cs" />
     <Compile Include="Controllers\BitacoraTypeUserRangeDatesFilterController.cs" />
     <Compile Include="Controllers\BitacoraUserFilteredController.cs" />
+    <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\ConsecutivosController.cs" />
     <Compile Include="Controllers\ConsecutivosUpdateController.cs" />
@@ -190,7 +191,12 @@
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\UsuarioPasswordController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\VueloBUYController.cs" />
     <Compile Include="Controllers\VuelosController.cs" />
+    <Compile Include="Controllers\VuelosSArriboController.cs" />
+    <Compile Include="Controllers\VuelosSController.cs" />
+    <Compile Include="Controllers\VuelosYArriboController.cs" />
+    <Compile Include="Controllers\VuelosYController.cs" />
     <Compile Include="Data\Usuario.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
