@@ -181,10 +181,12 @@
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\ConsecutivosController.cs" />
     <Compile Include="Controllers\ConsecutivosUpdateController.cs" />
+    <Compile Include="Controllers\easypayController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\ErrorsFilterByDateRangeController.cs" />
     <Compile Include="Controllers\FilteredAgencyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\logoutOrBuyController.cs" />
     <Compile Include="Controllers\newBuyHistoryController.cs" />
     <Compile Include="Controllers\newbuyhistorydetailsController.cs" />
     <Compile Include="Controllers\PaisController.cs" />

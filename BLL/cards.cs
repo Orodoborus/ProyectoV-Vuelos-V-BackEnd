@@ -167,7 +167,7 @@ namespace BLL
             }
         }
 
-        public void updatePayment(ref string mensaje_error, ref int numero_error, string Numcard, string MonthExp, string YearExp, string CVV, string Monto, string Tipo, string Card_tpe, string CodBUY, string codUser, string codvuelos, string cant, string total)
+        public void updatePayment(ref string mensaje_error, ref int numero_error, string Numcard, string MonthExp, string YearExp, string CVV, string Monto, string Tipo, string Card_tpe)
         {
             connection = cls_DAL.trae_conexion("Payment", ref mensaje_error, ref numero_error);
             sql = "exec success_payment @Num_Tarjeta = '" + Numcard + "', @Mes_Exp = '" + MonthExp + "', @Ano_Exp = '"+YearExp+"', @CVV = '"+CVV+"', @Monto = '"+Monto+"', @Tipo = '"+Tipo+"', @Card_Type = '"+ Card_tpe + "'";

@@ -51,8 +51,7 @@ namespace ProyectoV.Controllers
         {
             cards cart = new cards();
             crypting c = new crypting();
-            cart.updatePayment(ref mensaje_error, ref numero_error, value.Num_Tarjeta, c.encrypt(value.Mes_Exp), c.encrypt(value.Ano_Exp), c.encrypt(value.CVV), value.Monto, c.encrypt(value.Tipo), c.encrypt(value.Card_Type),
-                value.Codigo_Compras, c.encrypt(value.Cod_User_FK), c.encrypt(value.Codigo_Vuelo_FK), c.encrypt(value.Cantidad), c.encrypt(value.Total));
+            cart.updatePayment(ref mensaje_error, ref numero_error, value.Num_Tarjeta, c.encrypt(value.Mes_Exp), c.encrypt(value.Ano_Exp), c.encrypt(value.CVV), value.Monto, c.encrypt(value.Tipo), c.encrypt(value.Card_Type));
         }
 
     }

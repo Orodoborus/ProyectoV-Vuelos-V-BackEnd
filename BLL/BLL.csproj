@@ -49,6 +49,7 @@
     <Compile Include="Compras.cs" />
     <Compile Include="Compras_details.cs" />
     <Compile Include="Consecutivos.cs" />
+    <Compile Include="easy_pay.cs" />
     <Compile Include="Errors.cs" />
     <Compile Include="Pais.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

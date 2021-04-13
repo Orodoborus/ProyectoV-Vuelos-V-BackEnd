@@ -126,6 +126,18 @@ namespace BLL
             }
         }
 
+        public void deleteCartItems(ref string mensaje_error, ref int numero_error)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = " exec logout_or_successfullbuy";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
+        }
+
         private List<Carrito> getAllCartItems(DataTable dt)
         {
             return (from DataRow dr in dt.Rows
