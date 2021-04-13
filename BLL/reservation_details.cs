@@ -10,7 +10,7 @@ using DAL;
 
 namespace BLL
 {
-    class reservation_details
+    public class reservation_details
     {
         #region propfulls
         private string _booking_ID;
@@ -39,10 +39,46 @@ namespace BLL
 
         private string _price;
 
-        public string Price
+        public string Precio
         {
             get { return _price; }
             set { _price = value; }
+        }
+
+        private string _codvuelo;
+
+        public string Cod_Vuelo
+        {
+            get { return _codvuelo; }
+            set { _codvuelo = value; }
+        }
+
+        static string user = "";
+
+        public static string GlobalValueUSER
+        {
+            get
+            {
+                return user;
+            }
+            set
+            {
+                user = value;
+            }
+        }
+
+        static string CompraCod = "";
+
+        public static string GlobalValueBUYCODE
+        {
+            get
+            {
+                return CompraCod;
+            }
+            set
+            {
+                CompraCod = value;
+            }
         }
 
         #endregion
@@ -59,7 +95,7 @@ namespace BLL
 
         #region methods
 
-        public List<reservation_details> cargar_compra_especifica(ref string mensaje_error, ref int numero_error, string BookingID, string Cod_User)
+        public List<reservation_details> cargar_reserva_especifica(ref string mensaje_error, ref int numero_error, string BookingID, string Cod_User)
         {
             connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
             if (connection == null)
@@ -83,6 +119,18 @@ namespace BLL
             }
         }
 
+        public void add_new_detail(ref string mensaje_error, ref int numero_error, string BookingID, string Cod_User, string Cod_Vuelo, string Pais, string Precio)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "exec new_reservation_detail  @Booking_ID = '" + BookingID + "', @Cod_User = '" + Cod_User + "', @Cod_Vuelo = '" + Cod_Vuelo + "', @Pais = '" + Pais + "', @Precio = '" + Precio + "'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
+        }
+
         private List<reservation_details> get_all_reservation_details(DataTable dt)
         {
             return (from DataRow dr in dt.Rows
@@ -90,8 +138,9 @@ namespace BLL
                     {
                         Booking_ID = dr["Booking_ID"].ToString(),
                         Cod_User = dr["Cod_User"].ToString(),
+                        Cod_Vuelo = dr["Cod_Vuelo"].ToString(),
                         Pais = dr["Pais"].ToString(),
-                        Price = dr["Precio"].ToString()
+                        Precio = dr["Precio"].ToString()
                     }).ToList();
 
         }

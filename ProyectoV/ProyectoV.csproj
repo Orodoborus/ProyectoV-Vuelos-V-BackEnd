@@ -189,11 +189,14 @@
     <Compile Include="Controllers\logoutOrBuyController.cs" />
     <Compile Include="Controllers\newBuyHistoryController.cs" />
     <Compile Include="Controllers\newbuyhistorydetailsController.cs" />
+    <Compile Include="Controllers\newReservationAddController.cs" />
+    <Compile Include="Controllers\newreservationdetailController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PuertaController.cs" />
     <Compile Include="Controllers\PuertasActivasController.cs" />
     <Compile Include="Controllers\ReservasController.cs" />
+    <Compile Include="Controllers\reservationdetailsController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\UsuarioPasswordController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
