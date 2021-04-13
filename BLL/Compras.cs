@@ -106,7 +106,7 @@ namespace BLL
             }
             else
             {
-                sql = "exec get_all_buys";
+                sql = "exec get_all_buys @Cod_user = '"+user+"'";
                 ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
                 if (numero_error != 0)
                 {
@@ -135,6 +135,14 @@ namespace BLL
             {
                 
             }
+        }
+
+        public string encrypt(string text)
+        {
+            string encrypted = string.Empty;
+            Byte[] encrypt = new UnicodeEncoding().GetBytes(text);
+            encrypted = Convert.ToBase64String(encrypt);
+            return encrypted;
         }
 
         private List<Compras> get_all_current_buys(DataTable dt, string user)

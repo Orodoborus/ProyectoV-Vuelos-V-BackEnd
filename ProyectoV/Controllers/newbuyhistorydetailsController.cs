@@ -20,7 +20,8 @@ namespace ProyectoV.Controllers
         public void Post([FromBody]Compras_details value)
         {
             Compras_details cd = new Compras_details();
-            cd.add_new_detail(ref mensaje_error, ref numero_error, value.Codigo_Compra, value.Codigo_User, value.Codigo_Vuelo, value.Pais, value.Precio);
+            Errors b = new Errors();
+            cd.add_new_detail(ref mensaje_error, ref numero_error, value.Codigo_Compra, b.encrypt(value.Codigo_User), b.encrypt(value.Codigo_Vuelo), b.encrypt(value.Pais), b.encrypt(value.Precio));
         }
 
     }
