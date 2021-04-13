@@ -176,6 +176,7 @@
     <Compile Include="Controllers\BitacoraTypeFilteredController.cs" />
     <Compile Include="Controllers\BitacoraTypeUserRangeDatesFilterController.cs" />
     <Compile Include="Controllers\BitacoraUserFilteredController.cs" />
+    <Compile Include="Controllers\buyingdetailsController.cs" />
     <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\ConsecutivosController.cs" />
@@ -184,7 +185,10 @@
     <Compile Include="Controllers\ErrorsFilterByDateRangeController.cs" />
     <Compile Include="Controllers\FilteredAgencyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\newBuyHistoryController.cs" />
+    <Compile Include="Controllers\newbuyhistorydetailsController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PuertaController.cs" />
     <Compile Include="Controllers\PuertasActivasController.cs" />
     <Compile Include="Controllers\ReservasController.cs" />

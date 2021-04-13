@@ -6,36 +6,41 @@ using System.Net.Http;
 using System.Web.Http;
 using BLL;
 using Newtonsoft.Json;
+using ProyectoV.Models;
 
 namespace ProyectoV.Controllers
 {
     public class ComprasController : ApiController
     {
         // GET: api/Compras
-        public IEnumerable<string> Get()
+        string mensaje_error;
+        int numero_error;
+        public List<Compras> Get()
         {
-            return new string[] { "value1", "value2" };
+            List<Compras> item_carlist = new Compras().cargar_compras(ref mensaje_error, ref numero_error, Compras.GlobalValueUSER);
+            return item_carlist;
         }
 
         // GET: api/Compras/5
-        public string Get(int id)
+        public Compras Get(int id)
         {
-            return "value";
+            List<Compras> item_carlist = new Compras().cargar_compras(ref mensaje_error, ref numero_error, Compras.GlobalValueUSER);
+            crypting c = new crypting();
+            Compras x = item_carlist.ElementAt(id);
+            Compras spes = new Compras();
+            spes.Codigo_Compras = x.Codigo_Compras;
+            spes.Cod_User_FK = c.decrypt(x.Cod_User_FK);
+            spes.Codigo_Vuelo_FK = x.Codigo_Vuelo_FK;
+            spes.Cantidad = c.decrypt(x.Cantidad);
+            spes.Total = x.Total;
+            spes.DateBuy = c.decrypt(x.DateBuy);
+            return spes;
         }
 
         // POST: api/Compras
-        public void Post([FromBody]string value)
+        public void Post([FromBody] Compras value)
         {
-        }
-
-        // PUT: api/Compras/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Compras/5
-        public void Delete(int id)
-        {
+            Compras.GlobalValueUSER = value.Cod_User_FK;
         }
     }
 }

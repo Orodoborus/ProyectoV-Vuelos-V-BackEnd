@@ -10,7 +10,7 @@ using DAL;
 
 namespace BLL
 {
-    class Compras_details
+    public class Compras_details
     {
 
         #region propfulls
@@ -48,10 +48,38 @@ namespace BLL
 
         private string _price;
 
-        public string Price
+        public string Precio
         {
             get { return _price; }
             set { _price = value; }
+        }
+
+        static string user = "";
+
+        public static string GlobalValueUSER
+        {
+            get
+            {
+                return user;
+            }
+            set
+            {
+                user = value;
+            }
+        }
+
+        static string CompraCod = "";
+
+        public static string GlobalValueBUYCODE
+        {
+            get
+            {
+                return CompraCod;
+            }
+            set
+            {
+                CompraCod = value;
+            }
         }
 
         #endregion
@@ -92,6 +120,18 @@ namespace BLL
             }
         }
 
+        public void add_new_detail(ref string mensaje_error, ref int numero_error, string Codigo_Compra, string Codigo_user , string Codigo_Vuelo, string Pais, string Precio)
+        {
+            connection = cls_DAL.trae_conexion("ServiciosWeb", ref mensaje_error, ref numero_error);
+            sql = "exec new_detail  @Codigo_Compra = '" + Codigo_Compra + "', @Codigo_User = '" + Codigo_user + "', @Codigo_Vuelo = '" + Codigo_Vuelo + "', @Pais = '" + Pais + "', @Precio = '"+Precio+"'";
+            ds = cls_DAL.ejecuta_dataset(connection, sql, false, ref mensaje_error, ref numero_error);
+            if (numero_error != 0)
+            {
+                Errors e = new Errors();
+                e.crearErrorInterno(ref mensaje_error, ref numero_error, Errors.GlobalValue = Errors.GlobalValue + 1, e.encrypt(mensaje_error), e.encrypt(time), e.encrypt(date), e.encrypt(numero_error.ToString()));
+            }
+        }
+
         private List<Compras_details> get_users_specific_buys(DataTable dt)
         {
             return (from DataRow dr in dt.Rows
@@ -101,7 +141,7 @@ namespace BLL
                         Codigo_User = dr["Codigo_User"].ToString(),
                         Codigo_Vuelo = dr["Codigo_Vuelo"].ToString(),
                         Pais = dr["Pais"].ToString(),
-                        Price = dr["Precio"].ToString()
+                        Precio = dr["Precio"].ToString()
                     }).ToList();
         }
 
