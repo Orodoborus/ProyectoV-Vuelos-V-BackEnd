@@ -73,7 +73,7 @@ namespace BLL
             set { _userAct = value; }
         }
 
-        static int contadorID = 150;
+        static int contadorID = 189;
 
         public static int GlobalValue
         {

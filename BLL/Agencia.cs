@@ -69,7 +69,7 @@ namespace BLL
             set { _userCod = value; }
         }
 
-        static int airlineID = 0;
+        static int airlineID = 30;
 
         public static int GlobalValue
         {

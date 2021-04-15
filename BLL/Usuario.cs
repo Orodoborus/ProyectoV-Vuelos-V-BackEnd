@@ -103,7 +103,7 @@ namespace BLL
         }
 
 
-        static int contadorID = 10;
+        static int contadorID = 15;
 
         public static int GlobalValue
         {
